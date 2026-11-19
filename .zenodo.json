@@ -1,5 +1,5 @@
 {
-  "title": "Unified Habitability Index (UHI) v5.2-final",
+  "title": "Unified Habitability Index (UHI) v5.2.1",
   "upload_type": "software",
   "creators": [
     {
@@ -9,7 +9,7 @@
     }
   ],
   "license": "MIT",
-  "version": "5.2",
+  "version": "5.2.1",
   "keywords": [
     "exoplanets",
     "habitability",
@@ -18,5 +18,5 @@
     "ELT",
     "Monte Carlo"
   ],
-  "description": "Code, dated NASA Exoplanet Archive snapshot, machine-readable results for 6112 planets, figures and RNAAS manuscript for the Unified Habitability Index (UHI) v5.2-final: a Dirichlet-weighted geometric mean of seven sub-indices evaluated by Monte Carlo. Code MIT; data, results and figures CC BY 4.0."
+  "description": "Code, dated NASA Exoplanet Archive snapshot, machine-readable results for 6112 planets, figures and RNAAS manuscript for the Unified Habitability Index (UHI) v5.2.1: the final manuscript of the v5.2 model (reference corrections and expanded AI disclosure; no scientific changes). A Dirichlet-weighted geometric mean of seven sub-indices evaluated by Monte Carlo. Code MIT; data, results and figures CC BY 4.0."
 }

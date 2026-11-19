@@ -1,5 +1,14 @@
 # CHANGELOG: UHI (Unified Habitability Index)
 
+## v5.2.1 (2026-11-18)
+Manuscript and citation metadata only; no scientific changes to the v5.2-final model, catalog, or results.
+
+- Verified all 19 references against the original sources (DOI records) and NASA ADS.
+- Corrected the Kasper et al. (2021) author list, the Kempton et al. (2018) coauthor list, and the Habitable Worlds Catalog (PHL @ UPR Arecibo 2024) citation.
+- Added DOIs to the bibliography where they were missing.
+- Expanded the AI-use disclosure to name Grok (simulations and code, under the author's supervision) and Gemini (reviewer), as required by the AAS guidelines.
+- Clarified that all references were checked against the original sources (DOI records) and NASA ADS.
+
 ## v5.2-final (2026-11-18), frozen release `v5.2-final`
 This is the final version of the model. Licenses: code MIT (copyright Effy Viridis, 2026); data, results and figures CC-BY 4.0. PHL data are not redistributed (downloaded at run time under PHL terms). Archived on Zenodo from the GitHub release `v5.2-final` (`CITATION.cff`).
 
