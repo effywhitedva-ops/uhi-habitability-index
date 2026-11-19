@@ -49,7 +49,7 @@ Table 1 summarizes the Top 10 targets at 5σ alongside their 3σ rankings and co
 
 The 90% rank credible intervals are wide (e.g., 1–30 for the leading target) and are provided in the archive.
 
-Benchmarking against ESI_SM11 and the PHL Habitable Worlds Catalog (Méndez et al., updated 2024-03-12) confirms that UHI provides distinct prioritization (Spearman ρ = 0.466 vs. ESI_SM11 and 0.444 vs. PHL ESI among viable worlds). Specifically, 71.2% (47/66) of planets with ESI_SM11 ≥ 0.8 have median detection probability P_det < 0.001 at 5σ (72.0%, 18/25 for PHL ESI); UHI demotes these unobservable analogs so that none enter the top 29 (best: Kepler-1653 b at #30). Simultaneously, UHI rescues 26 nearby non-transiting viable worlds with median P_det ≥ 0.5 via ELT/PCS, placing seven in the Top 20 (GJ 273 b, Wolf 1061 c, Proxima Cen d, GJ 1061 d, Ross 128 b, Proxima Cen b, and GJ 433 d).
+Benchmarking against ESI_SM11 and the Habitable Worlds Catalog (PHL @ UPR Arecibo 2024, file last updated 2024-03-12) confirms that UHI provides distinct prioritization (Spearman ρ = 0.466 vs. ESI_SM11 and 0.444 vs. PHL ESI among viable worlds). Specifically, 71.2% (47/66) of planets with ESI_SM11 ≥ 0.8 have median detection probability P_det < 0.001 at 5σ (72.0%, 18/25 for PHL ESI); UHI demotes these unobservable analogs so that none enter the top 29 (best: Kepler-1653 b at #30). Simultaneously, UHI rescues 26 nearby non-transiting viable worlds with median P_det ≥ 0.5 via ELT/PCS, placing seven in the Top 20 (GJ 273 b, Wolf 1061 c, Proxima Cen d, GJ 1061 d, Ross 128 b, Proxima Cen b, and GJ 433 d).
 
 A 1-D sweep of the runaway veto across F_rg ∈ [275, 295] W m⁻² preserves Venus P_alive = 0, an identical Top 10, and Spearman ρ ≥ 0.996 among viable worlds. Sweeping the thermal boundary to T_rg = 3700–3750 K swaps #10 K2-125 b (T_eff = 3654 K, UHI_rank = 0.333) with #11 Ross 128 b (0.323) while leaving the other nine unchanged; we retain T_rg = 3800 K without post-hoc tuning and report this boundary sensitivity transparently.
 
@@ -59,7 +59,7 @@ All code (MIT license), dated catalog snapshots, machine-readable tables, and fi
 
 Software: Python 3.13, NumPy, SciPy, pandas, SALib (Herman & Usher 2017), Matplotlib, Astropy, PyArrow. This research has made use of the NASA Exoplanet Archive, operated by the California Institute of Technology under contract with NASA under the Exoplanet Exploration Program.
 
-**Use of AI Agents and Authorship:** AI agents with computing tools assisted in implementing the Python codebase, executing Monte Carlo and sensitivity runs on local and Google Colab runtimes, automating tables/figures, and performing methodological audits ("R-Aetherios"). Every proposed modification was reviewed and approved by the author, who retains full intellectual authorship and scientific responsibility. AI agents are tools and are not authors.
+**AI disclosure:** AI agents based on Grok (via Grok Bot; agents "Shoggothsito" and "Aetherios"), with computing tools and under the author's supervision, were used to implement and refactor the Python code, run Monte Carlo and sensitivity simulations on local and Google Colab runtimes, generate tables and figures from the author's data with Matplotlib, audit methods, assist in drafting, editing, and formatting the manuscript, and supplement the literature search. Gemini was used as a reviewer to provide critical feedback on the methodology and manuscript drafts; all suggestions were evaluated by the author. All references were checked against the original sources and NASA ADS. The author reviewed and approved every change and takes full responsibility for the content. AI tools are not authors.
 
 ## References
 
@@ -70,12 +70,12 @@ Software: Python 3.13, NumPy, SciPy, pandas, SALib (Herman & Usher 2017), Matplo
 - Goldblatt, C., Robinson, T. D., Zahnle, K. J., & Crisp, D. 2014, NatGeo, 7, 931 (Corrigendum)
 - Greene, T. P., Line, M. R., Montero, C., et al. 2016, ApJ, 817, 17
 - Herman, J., & Usher, W. 2017, JOSS, 2, 97
-- Kasper, M., Cerpa Urra, N., Verinaud, C., et al. 2021, Msngr, 182, 38
-- Kempton, E. M.-R., Lupu, R., Owusu-Asare, A., et al. 2018, PASP, 130, 114401
+- Kasper, M., Cerpa Urra, N., Pathak, P., et al. 2021, Msngr, 182, 38
+- Kempton, E. M.-R., Bean, J. L., Louie, D. R., et al. 2018, PASP, 130, 114401
 - Kopparapu, R. K., Ramirez, R., Kasting, J. F., et al. 2013, ApJ, 765, 131
 - Kopparapu, R. K., Ramirez, R. R., SchottelKotte, J., et al. 2014, ApJ, 787, L29
 - Kopparapu, R. K., Wolf, E. T., Haqq-Misra, J., et al. 2016, ApJ, 819, 84
-- Méndez, A., et al. 2024, Planetary Habitability Laboratory Habitable Worlds Catalog (updated 2024-03-12), Univ. of Puerto Rico at Arecibo
+- PHL @ UPR Arecibo 2024, The Habitable Worlds Catalog (file last updated 2024-03-12), https://phl.upr.edu/hwc
 - North, G. R., Cahalan, R. F., & Coakley, J. A. 1981, RGeo, 19, 91
 - Schulze-Makuch, D., Méndez, A., Fairén, A. G., et al. 2011, Astrobiology, 11, 1041
 - Shields, A. L., Meadows, V. S., Bitz, C. M., et al. 2013, Astrobiology, 13, 715

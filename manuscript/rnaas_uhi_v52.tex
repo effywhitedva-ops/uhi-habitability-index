@@ -75,7 +75,7 @@ Table~\ref{tab:top10} summarizes the Top 10 targets at $5\sigma$ alongside their
 
 The 90\% rank credible intervals are wide (e.g., 1--30 for the leading target) and are provided in the archive.
 
-Benchmarking against ESI$_{\rm SM11}$ and the PHL Habitable Worlds Catalog \citep[][updated 2024-03-12]{Mendez2024} confirms that UHI provides distinct prioritization (Spearman $\rho = 0.466$ vs.\ ESI$_{\rm SM11}$ and 0.444 vs.\ PHL ESI among viable worlds). Specifically, 71.2\% (47/66) of planets with ESI$_{\rm SM11} \geq 0.8$ have median detection probability $P_{\rm det} < 0.001$ at $5\sigma$ (72.0\%, 18/25 for PHL ESI); UHI demotes these unobservable analogs so that none enter the top 29 (best: Kepler-1653 b at \#30). Simultaneously, UHI rescues 26 nearby non-transiting viable worlds with median $P_{\rm det} \geq 0.5$ via ELT/PCS, placing seven in the Top 20 (GJ 273 b, Wolf 1061 c, Proxima Cen d, GJ 1061 d, Ross 128 b, Proxima Cen b, and GJ 433 d).
+Benchmarking against ESI$_{\rm SM11}$ and the Habitable Worlds Catalog \citep[][file last updated 2024-03-12]{Mendez2024} confirms that UHI provides distinct prioritization (Spearman $\rho = 0.466$ vs.\ ESI$_{\rm SM11}$ and 0.444 vs.\ PHL ESI among viable worlds). Specifically, 71.2\% (47/66) of planets with ESI$_{\rm SM11} \geq 0.8$ have median detection probability $P_{\rm det} < 0.001$ at $5\sigma$ (72.0\%, 18/25 for PHL ESI); UHI demotes these unobservable analogs so that none enter the top 29 (best: Kepler-1653 b at \#30). Simultaneously, UHI rescues 26 nearby non-transiting viable worlds with median $P_{\rm det} \geq 0.5$ via ELT/PCS, placing seven in the Top 20 (GJ 273 b, Wolf 1061 c, Proxima Cen d, GJ 1061 d, Ross 128 b, Proxima Cen b, and GJ 433 d).
 
 A 1-D sweep of the runaway veto across $F_{\rm rg} \in [275, 295]$\,W\,m$^{-2}$ preserves Venus $P_{\rm alive} = 0$, an identical Top 10, and Spearman $\rho \geq 0.996$ among viable worlds. Sweeping the thermal boundary to $T_{\rm rg} = 3700$--$3750$\,K swaps \#10 K2-125 b ($T_{\rm eff} = 3654$\,K, ${\rm UHI}_{\rm rank} = 0.333$) with \#11 Ross 128 b (0.323) while leaving the other nine unchanged; we retain $T_{\rm rg} = 3800$\,K without post-hoc tuning and report this boundary sensitivity transparently.
 
@@ -86,7 +86,7 @@ All code (MIT license), dated catalog snapshots, machine-readable tables, and fi
 \begin{acknowledgments}
 This research has made use of the NASA Exoplanet Archive, operated by the California Institute of Technology under contract with NASA under the Exoplanet Exploration Program.
 
-\textbf{Use of AI Agents and Authorship.} AI agents with computing tools assisted in implementing the Python codebase, executing Monte Carlo and sensitivity runs on local and Google Colab runtimes, automating tables/figures, and performing methodological audits (``R-Aetherios''). Every proposed modification was reviewed and approved by the author, who retains full intellectual authorship and scientific responsibility. AI agents are tools and are not authors.
+\textbf{AI disclosure.} AI agents based on Grok (via Grok Bot; agents ``Shoggothsito'' and ``Aetherios''), with computing tools and under the author's supervision, were used to implement and refactor the Python code, run Monte Carlo and sensitivity simulations on local and Google Colab runtimes, generate tables and figures from the author's data with Matplotlib, audit methods, assist in drafting, editing, and formatting the manuscript, and supplement the literature search. Gemini was used as a reviewer to provide critical feedback on the methodology and manuscript drafts; all suggestions were evaluated by the author. All references were checked against the original sources and {NASA} {ADS}. The author reviewed and approved every change and takes full responsibility for the content. AI tools are not authors.
 \end{acknowledgments}
 
 \software{Python 3.13, NumPy, SciPy, pandas, SALib \citep{Herman2017}, Matplotlib, Astropy, PyArrow}
@@ -107,9 +107,9 @@ This research has made use of the NASA Exoplanet Archive, operated by the Califo
 
 \bibitem[Herman \& Usher(2017)]{Herman2017} Herman, J., \& Usher, W. 2017, JOSS, 2, 97
 
-\bibitem[Kasper et al.(2021)]{Kasper2021} Kasper, M., Cerpa Urra, N., Verinaud, C., et al. 2021, Msngr, 182, 38
+\bibitem[Kasper et al.(2021)]{Kasper2021} Kasper, M., Cerpa Urra, N., Pathak, P., et al. 2021, Msngr, 182, 38
 
-\bibitem[Kempton et al.(2018)]{Kempton2018} Kempton, E.~M.-R., Lupu, R., Owusu-Asare, A., et al. 2018, PASP, 130, 114401
+\bibitem[Kempton et al.(2018)]{Kempton2018} Kempton, E.~M.-R., Bean, J.~L., Louie, D.~R., et al. 2018, PASP, 130, 114401
 
 \bibitem[Kopparapu et al.(2013)]{Kopparapu2013} Kopparapu, R.~K., Ramirez, R., Kasting, J.~F., et al. 2013, ApJ, 765, 131
 
@@ -117,7 +117,7 @@ This research has made use of the NASA Exoplanet Archive, operated by the Califo
 
 \bibitem[Kopparapu et al.(2016)]{Kopparapu2016} Kopparapu, R.~K., Wolf, E.~T., Haqq-Misra, J., et al. 2016, ApJ, 819, 84
 
-\bibitem[M\'endez et al.(2024)]{Mendez2024} M\'endez, A., et al. 2024, Planetary Habitability Laboratory Habitable Worlds Catalog (updated 2024-03-12), Univ.\ of Puerto Rico at Arecibo
+\bibitem[{PHL @ UPR Arecibo}(2024)]{Mendez2024} PHL @ UPR Arecibo 2024, The Habitable Worlds Catalog (file last updated 2024-03-12), \url{https://phl.upr.edu/hwc}
 
 \bibitem[North et al.(1981)]{North1981} North, G.~R., Cahalan, R.~F., \& Coakley, J.~A. 1981, RGeo, 19, 91
 
