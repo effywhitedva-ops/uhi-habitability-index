@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software or the UHI results, please cite it as below. A Zenodo DOI is pending."
+title: "Unified Habitability Index (UHI)"
+version: "5.2"
+date-released: 2026-11-18
+authors:
+  - family-names: Viridis
+    given-names: Effy
+license: MIT
+# doi: pending Zenodo deposit (not created in this release)
+keywords:
+  - exoplanets
+  - habitability
+  - UHI
+  - JWST
+  - ELT
+abstract: >
+  The Unified Habitability Index (UHI) is a probabilistic
+  habitability-and-observability index: a Dirichlet-weighted geometric
+  mean of seven sub-indices, evaluated by Monte Carlo over the NASA
+  Exoplanet Archive pscomppars table. This release is v5.2-final
+  (2026-11-18).

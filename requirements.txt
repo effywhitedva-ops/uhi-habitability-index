@@ -1,0 +1,10 @@
+# Versiones exactas del entorno de la corrida certificada v5.2 (Google Colab CPU, 18 nov 2026; Python 3.13)
+numpy==2.4.6
+scipy==1.16.3
+pandas==2.2.3
+# Tablas, figuras y MRT (generadas en el entorno local de verificacion)
+matplotlib==3.11.2
+astropy==8.0.3
+pyarrow==26.0.1
+# Solo para re-ejecutar el analisis de Sobol (src/uhi_sens.py); no lo usa el script maestro
+SALib==1.6.0
