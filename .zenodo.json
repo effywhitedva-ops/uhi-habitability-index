@@ -1,0 +1,22 @@
+{
+  "title": "Unified Habitability Index (UHI) v5.2-final",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "Viridis, Effy",
+      "orcid": "0009-0004-5620-5352",
+      "affiliation": "Independent Researcher, El Salvador"
+    }
+  ],
+  "license": "MIT",
+  "version": "5.2",
+  "keywords": [
+    "exoplanets",
+    "habitability",
+    "observability",
+    "JWST",
+    "ELT",
+    "Monte Carlo"
+  ],
+  "description": "Code, dated NASA Exoplanet Archive snapshot, machine-readable results for 6112 planets, figures and RNAAS manuscript for the Unified Habitability Index (UHI) v5.2-final: a Dirichlet-weighted geometric mean of seven sub-indices evaluated by Monte Carlo. Code MIT; data, results and figures CC BY 4.0."
+}

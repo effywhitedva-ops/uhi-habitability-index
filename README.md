@@ -4,7 +4,7 @@
 
 UHI is a probabilistic habitability-and-observability index: a Dirichlet-weighted geometric mean of 7 sub-indices (S_fis, S_clima, S_atm, S_estrella, S_geo, S_mag, S_obs). It is evaluated by Monte Carlo (10 000 draws per planet) over the NASA Exoplanet Archive `pscomppars` table. Planets are ranked by UHI_rank = P(UHI > 0) × median(UHI | UHI > 0).
 
-This is the **final** frozen version of the model. No GitHub repository or Zenodo DOI has been created yet; the DOI in `CITATION.cff` is pending.
+This is the **final** frozen version of the model. Repository: https://github.com/effywhitedva-ops/uhi-habitability-index. The Zenodo DOI is minted from the GitHub release `v5.2-final`.
 
 ## Licenses
 - **Code** (`src/`, `notebooks/`, `run_uhi_v52.py` and the textual documentation): [MIT License](LICENSE), copyright Effy Viridis, 2026.
@@ -58,4 +58,4 @@ The 1-D veto sweep passes for F_rg = 275–295 W m⁻² (including Goldblatt et 
 - PHL @ UPR Arecibo, Habitable Worlds Catalog (`hwc.csv`, last updated 2024-03-12, md5 `e971b8dcc305a2fb142d2840aaa8ca37`). It is **downloaded at run time and not redistributed**. `tables/uhi_results_v52_with_benchmark.csv` and the benchmark tables contain the PHL ESI and habitability flag for matched planets; check PHL's terms before publishing them.
 
 ## Pending (outside this package)
-- Create the GitHub repository and mint a Zenodo DOI for the `v5.2-final` release (not done here). Until then, cite with `CITATION.cff` and treat the DOI as pending.
+- Cite with `CITATION.cff` and the Zenodo DOI of the `v5.2-final` release.

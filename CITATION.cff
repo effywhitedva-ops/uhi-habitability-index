@@ -1,13 +1,15 @@
 cff-version: 1.2.0
-message: "If you use this software or the UHI results, please cite it as below. A Zenodo DOI is pending."
+message: "If you use this software or the UHI results, please cite it as below. The Zenodo DOI for this release is listed on the repository page."
 title: "Unified Habitability Index (UHI)"
 version: "5.2"
 date-released: 2026-11-18
 authors:
   - family-names: Viridis
     given-names: Effy
+    orcid: "https://orcid.org/0009-0004-5620-5352"
+    affiliation: "Independent Researcher, El Salvador"
 license: MIT
-# doi: pending Zenodo deposit (not created in this release)
+repository-code: "https://github.com/effywhitedva-ops/uhi-habitability-index"
 keywords:
   - exoplanets
   - habitability

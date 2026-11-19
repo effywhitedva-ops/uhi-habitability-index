@@ -55,7 +55,7 @@ A 1-D sweep of the runaway veto across F_rg ∈ [275, 295] W m⁻² preserves Ve
 
 ## 4. Reproducibility, Software, and Acknowledgments
 
-All code (MIT license), dated catalog snapshots, machine-readable tables, and figures (CC BY 4.0) for UHI v5.2-final are archived at [GITHUB_URL] and [ZENODO_DOI] (DOI pending). The PHL catalog is fetched at runtime and not redistributed.
+All code (MIT license), dated catalog snapshots, machine-readable tables, and figures (CC BY 4.0) for UHI v5.2-final are archived at https://github.com/effywhitedva-ops/uhi-habitability-index and [ZENODO_DOI] (DOI pending). The PHL catalog is fetched at runtime and not redistributed.
 
 Software: Python 3.13, NumPy, SciPy, pandas, SALib (Herman & Usher 2017), Matplotlib, Astropy, PyArrow. This research has made use of the NASA Exoplanet Archive, operated by the California Institute of Technology under contract with NASA under the Exoplanet Exploration Program.
 

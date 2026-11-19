@@ -1,7 +1,7 @@
 # CHANGELOG: UHI (Unified Habitability Index)
 
 ## v5.2-final (2026-11-18), frozen release `v5.2-final`
-This is the final version of the model. Licenses: code MIT (copyright Effy Viridis, 2026); data, results and figures CC-BY 4.0. PHL data are not redistributed (downloaded at run time under PHL terms). A Zenodo DOI is pending (`CITATION.cff`).
+This is the final version of the model. Licenses: code MIT (copyright Effy Viridis, 2026); data, results and figures CC-BY 4.0. PHL data are not redistributed (downloaded at run time under PHL terms). Archived on Zenodo from the GitHub release `v5.2-final` (`CITATION.cff`).
 
 - **Smooth Yang et al. (2013) cloud-albedo blend.** The hard cutoff at S0 = 1000 W m⁻² in v5.1 is replaced by a linear ramp w_eff(S0) = clip((S0 − 800)/200, 0, 1). The model does not extrapolate below the tabulated range. The top 10 is identical and in the same order as v5.1; Spearman v5.1 vs v5.2 (live planets) = 0.999998.
 - **Runaway-greenhouse veto (v5.1, Goldblatt et al. 2013, 282 W m⁻²).** The Teff boundary of the veto is now a separate parameter (`teff_rg`, default 3800 K = `teff_md`).
