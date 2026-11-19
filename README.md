@@ -1,12 +1,12 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24358996.svg)](https://doi.org/10.5281/zenodo.24358996)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24358421.svg)](https://doi.org/10.5281/zenodo.24358421)
 
 # UHI v5.2-final: Unified Habitability Index, reproducibility package
 
-**Lead author:** Effy Viridis · **Release:** `v5.2.1` (2026-11-18) · **Code license:** MIT · **Data/results/figures:** CC-BY 4.0
+**Lead author:** Effy Viridis · **Release:** `v5.2.2` (2026-11-19) · **Code license:** MIT · **Data/results/figures:** CC-BY 4.0
 
 UHI is a probabilistic habitability-and-observability index: a Dirichlet-weighted geometric mean of 7 sub-indices (S_fis, S_clima, S_atm, S_estrella, S_geo, S_mag, S_obs). It is evaluated by Monte Carlo (10 000 draws per planet) over the NASA Exoplanet Archive `pscomppars` table. Planets are ranked by UHI_rank = P(UHI > 0) × median(UHI | UHI > 0).
 
-This is the **final** frozen version of the model. Repository: https://github.com/effywhitedva-ops/uhi-habitability-index. Zenodo DOI for `v5.2.1`: [10.5281/zenodo.24358996](https://doi.org/10.5281/zenodo.24358996) (all versions: [10.5281/zenodo.24358421](https://doi.org/10.5281/zenodo.24358421)).
+This is the **final** frozen version of the model. Repository: https://github.com/effywhitedva-ops/uhi-habitability-index. Zenodo, all versions (resolves to the latest): [10.5281/zenodo.24358421](https://doi.org/10.5281/zenodo.24358421). The RNAAS manuscript (AAS83819) cites the `v5.2.1` version DOI [10.5281/zenodo.24358996](https://doi.org/10.5281/zenodo.24358996). `v5.2.2` only updates `manuscript/` to the length-revised note resubmitted to RNAAS on 2026-11-19; code, data and results are identical to `v5.2.1`.
 
 ## Licenses
 - **Code** (`src/`, `notebooks/`, `run_uhi_v52.py` and the textual documentation): [MIT License](LICENSE), copyright Effy Viridis, 2026.
@@ -32,6 +32,7 @@ See also `CITATION.cff`.
 | `figures/` | (a) Sobol S_i/S_Ti post-v5, (b) P_alive vs conditional median, (c) UHI 5σ/3σ vs ESI/PHL; plus anchors and top-20 previews |
 | `sens_out_v5/` | Sobol post-v5 summary outputs (inputs of figure a) |
 | `notebooks/UHI_v5.2_colab.ipynb` | Colab notebook (runs the master script) |
+| `manuscript/` | RNAAS note: LaTeX source (AASTeX 7) and PDF of the length-revised version resubmitted on 2026-11-19 (`rnaas_uhi_v52_r3.*`) |
 | `docs/` | Assumptions (Spanish), the 5σ vs 3σ discussion (Spanish) and the Software/Acknowledgments note (English) |
 | `LICENSE`, `LICENSE-DATA`, `CITATION.cff` | Licenses and citation metadata |
 
@@ -60,4 +61,4 @@ The 1-D veto sweep passes for F_rg = 275–295 W m⁻² (including Goldblatt et 
 - PHL @ UPR Arecibo, Habitable Worlds Catalog (`hwc.csv`, last updated 2024-03-12, md5 `e971b8dcc305a2fb142d2840aaa8ca37`). It is **downloaded at run time and not redistributed**. `tables/uhi_results_v52_with_benchmark.csv` and the benchmark tables contain the PHL ESI and habitability flag for matched planets; check PHL's terms before publishing them.
 
 ## Pending (outside this package)
-- Cite with `CITATION.cff` and the Zenodo DOI of the `v5.2.1` release.
+- Cite with `CITATION.cff` and the Zenodo concept DOI 10.5281/zenodo.24358421 (or the version DOI of the release you used).

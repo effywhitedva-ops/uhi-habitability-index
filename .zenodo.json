@@ -1,5 +1,5 @@
 {
-  "title": "Unified Habitability Index (UHI) v5.2.1",
+  "title": "Code and data associated with the RNAAS note \"Unified Habitability Index (UHI) v5.2\" (AAS83819)",
   "upload_type": "software",
   "creators": [
     {
@@ -9,7 +9,7 @@
     }
   ],
   "license": "MIT",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "keywords": [
     "exoplanets",
     "habitability",
@@ -18,5 +18,5 @@
     "ELT",
     "Monte Carlo"
   ],
-  "description": "Code, dated NASA Exoplanet Archive snapshot, machine-readable results for 6112 planets, figures and RNAAS manuscript for the Unified Habitability Index (UHI) v5.2.1: the final manuscript of the v5.2 model (reference corrections and expanded AI disclosure; no scientific changes). A Dirichlet-weighted geometric mean of seven sub-indices evaluated by Monte Carlo. Code MIT; data, results and figures CC BY 4.0."
+  "description": "<p>Companion code and data for the RNAAS research note by E. Viridis (manuscript AAS83819, under review at Research Notes of the AAS). This is the frozen v5.2.1 reproducibility package; v5.2.1 differs from v5.2 only in reference corrections and an expanded AI disclosure (no scientific changes).</p>\n<p>v5.2.2 updates the manuscript files to the length-revised version resubmitted to RNAAS on 19 Nov 2026 (no changes to code, data, or results).</p>\n<p>&nbsp;</p>\n<p>UHI is a probabilistic habitability-and-observability index: a Dirichlet-weighted geometric mean of seven sub-indices, evaluated by Monte Carlo (10,000 draws per planet, seed 42) over the NASA Exoplanet Archive pscomppars table. Planets are ranked by UHI_rank = P(UHI &gt; 0) x median(UHI | UHI &gt; 0).</p>\n<p>&nbsp;</p>\n<p>Contents (single ZIP mirroring the GitHub release; see README.md inside):</p>\n<ul>\n<li>data/: dated catalog snapshot pscomppars_2026-11-18 (CSV and Parquet; 6,470 rows). Source: NASA Exoplanet Archive (NASA/IPAC).</li>\n<li>results/: full results for 6,112 scored planets (CSV and AAS machine-readable table .mrt, which lists every column with its units), 3-sigma variant, Earth/Venus/Mars control anchors and the runaway-greenhouse veto sweep. UHI and sub-indices are dimensionless (0-1); radius and mass in Earth units; instellation in Earth units.</li>\n<li>tables/: summary tables and statistics (CSV, JSON, Markdown).</li>\n<li>figures/: all figures (PDF and PNG).</li>\n<li>src/, run_uhi_v52.py, notebooks/: Python code that regenerates everything from the snapshot (requirements.txt lists dependencies).</li>\n<li>sens_out_v5/: Sobol/LHS sensitivity outputs.</li>\n<li>manuscript/: LaTeX source (AASTeX 7) and PDF of the submitted note.</li>\n</ul>\n<p>PHL Habitable Worlds Catalog data are not redistributed; the code downloads them at run time.</p>\n<p>&nbsp;</p>\n<p>License: code MIT; data, results and figures CC BY 4.0.</p>"
 }

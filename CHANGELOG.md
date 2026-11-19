@@ -1,5 +1,11 @@
 # CHANGELOG: UHI (Unified Habitability Index)
 
+## v5.2.2 (2026-11-19)
+Manuscript files only; no changes to code, data, or results.
+
+- Replaced the RNAAS manuscript in `manuscript/` with the length-revised version resubmitted to RNAAS on 2026-11-19 (AAS83819): trimmed to the RNAAS word limit, first person singular, full NASA Exoplanet Archive acknowledgment, Christiansen et al. (2025) cited instead of Akeson et al. (2013), compact AI disclosure.
+- Removed the unused `.bib` file (the note uses an inline bibliography), the old build log and the Markdown copy of the previous text; the previous manuscript remains available in the `v5.2.1` tag.
+
 ## v5.2.1 (2026-11-18)
 Manuscript and citation metadata only; no scientific changes to the v5.2-final model, catalog, or results.
 
