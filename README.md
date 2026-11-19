@@ -1,10 +1,12 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24358422.svg)](https://doi.org/10.5281/zenodo.24358422)
+
 # UHI v5.2-final: Unified Habitability Index, reproducibility package
 
 **Lead author:** Effy Viridis · **Release:** `v5.2-final` (2026-11-18) · **Code license:** MIT · **Data/results/figures:** CC-BY 4.0
 
 UHI is a probabilistic habitability-and-observability index: a Dirichlet-weighted geometric mean of 7 sub-indices (S_fis, S_clima, S_atm, S_estrella, S_geo, S_mag, S_obs). It is evaluated by Monte Carlo (10 000 draws per planet) over the NASA Exoplanet Archive `pscomppars` table. Planets are ranked by UHI_rank = P(UHI > 0) × median(UHI | UHI > 0).
 
-This is the **final** frozen version of the model. Repository: https://github.com/effywhitedva-ops/uhi-habitability-index. The Zenodo DOI is minted from the GitHub release `v5.2-final`.
+This is the **final** frozen version of the model. Repository: https://github.com/effywhitedva-ops/uhi-habitability-index. Zenodo DOI for `v5.2-final`: [10.5281/zenodo.24358422](https://doi.org/10.5281/zenodo.24358422) (all versions: [10.5281/zenodo.24358421](https://doi.org/10.5281/zenodo.24358421)).
 
 ## Licenses
 - **Code** (`src/`, `notebooks/`, `run_uhi_v52.py` and the textual documentation): [MIT License](LICENSE), copyright Effy Viridis, 2026.
