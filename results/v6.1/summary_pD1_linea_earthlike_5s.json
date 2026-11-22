@@ -1,0 +1,42 @@
+{
+ "tag": "pD1_linea_earthlike_5s",
+ "cfg": {
+  "climate_mode": "rot",
+  "xuv": true,
+  "shore_model": "xuv4",
+  "xuv_star": "mors",
+  "d3": true,
+  "branches": true,
+  "hycean_climate": "innes",
+  "class_prior": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "msini": "iso",
+  "mr": "otegi",
+  "rock_line": "earthlike",
+  "rs_floor": true
+ },
+ "thr": 5.0,
+ "draws": 10000,
+ "seconds": 151,
+ "version": "v6.1-fase1 (2026-11-20)",
+ "rocky": {
+  "scored": 6112,
+  "alive": 248
+ },
+ "hycean": {
+  "scored": 6112,
+  "alive": 70
+ },
+ "combined": {
+  "scored": 6112,
+  "alive": 282
+ },
+ "alive_P001": {
+  "rocky": 124,
+  "hycean": 22,
+  "combined": 143
+ }
+}

@@ -1,0 +1,103 @@
+thr,output,excluida,motivo
+5,rocky:top10_overlap,False,
+5,rocky:spearman_vs_base,False,
+5,rocky:count_alive,False,
+5,rocky:UHI_TOI-7166 b,False,
+5,rocky:UHI_GJ 3378 b,False,
+5,rocky:UHI_GJ 273 b,False,
+5,rocky:UHI_Proxima Cen b,False,
+5,rocky:UHI_Proxima Cen d,False,
+5,rocky:UHI_TRAPPIST-1 d,False,
+5,rocky:UHI_TRAPPIST-1 e,False,
+5,rocky:UHI_TRAPPIST-1 f,False,
+5,rocky:UHI_TOI-700 d,False,
+5,rocky:UHI_TOI-700 e,False,
+5,rocky:UHI_K2-18 b,False,
+5,rocky:UHI_LHS 1140 b,False,
+5,rocky:UHI_Kepler-186 f,True,constante
+5,rocky:UHI_TOI-4336 A b,True,constante
+5,hycean:top10_overlap,False,
+5,hycean:spearman_vs_base,False,
+5,hycean:count_alive,False,
+5,hycean:UHI_TOI-7166 b,True,casi_siempre_igual(0.024)
+5,hycean:UHI_GJ 3378 b,True,casi_siempre_igual(0.027)
+5,hycean:UHI_GJ 273 b,True,casi_siempre_igual(0.004)
+5,hycean:UHI_Proxima Cen b,False,
+5,hycean:UHI_Proxima Cen d,True,constante
+5,hycean:UHI_TRAPPIST-1 d,True,constante
+5,hycean:UHI_TRAPPIST-1 e,True,constante
+5,hycean:UHI_TRAPPIST-1 f,True,constante
+5,hycean:UHI_TOI-700 d,True,casi_siempre_igual(0.024)
+5,hycean:UHI_TOI-700 e,True,casi_siempre_igual(0.000)
+5,hycean:UHI_K2-18 b,True,casi_siempre_igual(0.019)
+5,hycean:UHI_LHS 1140 b,False,
+5,hycean:UHI_Kepler-186 f,False,
+5,hycean:UHI_TOI-4336 A b,True,casi_siempre_igual(0.000)
+5,combined:top10_overlap,False,
+5,combined:spearman_vs_base,False,
+5,combined:count_alive,False,
+5,combined:UHI_TOI-7166 b,False,
+5,combined:UHI_GJ 3378 b,False,
+5,combined:UHI_GJ 273 b,False,
+5,combined:UHI_Proxima Cen b,False,
+5,combined:UHI_Proxima Cen d,False,
+5,combined:UHI_TRAPPIST-1 d,False,
+5,combined:UHI_TRAPPIST-1 e,False,
+5,combined:UHI_TRAPPIST-1 f,False,
+5,combined:UHI_TOI-700 d,False,
+5,combined:UHI_TOI-700 e,False,
+5,combined:UHI_K2-18 b,False,
+5,combined:UHI_LHS 1140 b,False,
+5,combined:UHI_Kepler-186 f,False,
+5,combined:UHI_TOI-4336 A b,True,casi_siempre_igual(0.000)
+3,rocky:top10_overlap,False,
+3,rocky:spearman_vs_base,False,
+3,rocky:count_alive,False,
+3,rocky:UHI_TOI-7166 b,False,
+3,rocky:UHI_GJ 3378 b,False,
+3,rocky:UHI_GJ 273 b,False,
+3,rocky:UHI_Proxima Cen b,False,
+3,rocky:UHI_Proxima Cen d,False,
+3,rocky:UHI_TRAPPIST-1 d,False,
+3,rocky:UHI_TRAPPIST-1 e,False,
+3,rocky:UHI_TRAPPIST-1 f,False,
+3,rocky:UHI_TOI-700 d,False,
+3,rocky:UHI_TOI-700 e,False,
+3,rocky:UHI_K2-18 b,False,
+3,rocky:UHI_LHS 1140 b,False,
+3,rocky:UHI_Kepler-186 f,True,constante
+3,rocky:UHI_TOI-4336 A b,True,constante
+3,hycean:top10_overlap,False,
+3,hycean:spearman_vs_base,False,
+3,hycean:count_alive,False,
+3,hycean:UHI_TOI-7166 b,True,casi_siempre_igual(0.024)
+3,hycean:UHI_GJ 3378 b,True,casi_siempre_igual(0.027)
+3,hycean:UHI_GJ 273 b,True,casi_siempre_igual(0.004)
+3,hycean:UHI_Proxima Cen b,False,
+3,hycean:UHI_Proxima Cen d,True,constante
+3,hycean:UHI_TRAPPIST-1 d,True,constante
+3,hycean:UHI_TRAPPIST-1 e,True,constante
+3,hycean:UHI_TRAPPIST-1 f,True,constante
+3,hycean:UHI_TOI-700 d,True,casi_siempre_igual(0.024)
+3,hycean:UHI_TOI-700 e,True,casi_siempre_igual(0.000)
+3,hycean:UHI_K2-18 b,True,casi_siempre_igual(0.019)
+3,hycean:UHI_LHS 1140 b,False,
+3,hycean:UHI_Kepler-186 f,False,
+3,hycean:UHI_TOI-4336 A b,True,casi_siempre_igual(0.000)
+3,combined:top10_overlap,False,
+3,combined:spearman_vs_base,False,
+3,combined:count_alive,False,
+3,combined:UHI_TOI-7166 b,False,
+3,combined:UHI_GJ 3378 b,False,
+3,combined:UHI_GJ 273 b,False,
+3,combined:UHI_Proxima Cen b,False,
+3,combined:UHI_Proxima Cen d,False,
+3,combined:UHI_TRAPPIST-1 d,False,
+3,combined:UHI_TRAPPIST-1 e,False,
+3,combined:UHI_TRAPPIST-1 f,False,
+3,combined:UHI_TOI-700 d,False,
+3,combined:UHI_TOI-700 e,False,
+3,combined:UHI_K2-18 b,False,
+3,combined:UHI_LHS 1140 b,False,
+3,combined:UHI_Kepler-186 f,False,
+3,combined:UHI_TOI-4336 A b,True,casi_siempre_igual(0.000)

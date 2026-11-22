@@ -1,0 +1,14 @@
+main_5s 0 6112 0s
+main_5s 500 6112 14s
+main_5s 1000 6112 27s
+main_5s 1500 6112 40s
+main_5s 2000 6112 52s
+main_5s 2500 6112 65s
+main_5s 3000 6112 78s
+main_5s 3500 6112 91s
+main_5s 4000 6112 104s
+main_5s 4500 6112 117s
+main_5s 5000 6112 129s
+main_5s 5500 6112 141s
+main_5s 6000 6112 153s
+{"tag": "main_5s", "cfg": {"climate_mode": "rot", "xuv": true, "shore_model": "xuv4", "xuv_star": "mors", "d3": true, "branches": true, "hycean_climate": "innes", "class_prior": [1.0, 1.0, 1.0], "msini": "iso", "mr": "otegi", "rock_line": "h2o50", "rs_floor": true}, "thr": 5.0, "draws": 10000, "seconds": 157, "version": "v6.1-fase1 (2026-11-20)", "rocky": {"scored": 6112, "alive": 255}, "hycean": {"scored": 6112, "alive": 71}, "combined": {"scored": 6112, "alive": 287}, "alive_P001": {"rocky": 130, "hycean": 22, "combined": 148}}

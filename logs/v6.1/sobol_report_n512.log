@@ -1,0 +1,6 @@
+rocky_5s {'N': 512, 'n_outputs': 15, 'n_excluded': 2, 'top10_pass_full_width': 9, 'top10_pass_half_width': 10, 'criterion_full_met': False, 'criterion_half_met': True}
+hycean_5s {'N': 512, 'n_outputs': 6, 'n_excluded': 11, 'top10_pass_full_width': 2, 'top10_pass_half_width': 6, 'criterion_full_met': False, 'criterion_half_met': False}
+combined_5s {'N': 512, 'n_outputs': 16, 'n_excluded': 1, 'top10_pass_full_width': 7, 'top10_pass_half_width': 10, 'criterion_full_met': False, 'criterion_half_met': True}
+rocky_3s {'N': 512, 'n_outputs': 15, 'n_excluded': 2, 'top10_pass_full_width': 9, 'top10_pass_half_width': 10, 'criterion_full_met': False, 'criterion_half_met': True}
+hycean_3s {'N': 512, 'n_outputs': 6, 'n_excluded': 11, 'top10_pass_full_width': 3, 'top10_pass_half_width': 6, 'criterion_full_met': False, 'criterion_half_met': False}
+combined_3s {'N': 512, 'n_outputs': 16, 'n_excluded': 1, 'top10_pass_full_width': 8, 'top10_pass_half_width': 10, 'criterion_full_met': False, 'criterion_half_met': True}

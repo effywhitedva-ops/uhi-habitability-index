@@ -1,0 +1,235 @@
+{
+"legacy_regression": {
+"uhi_v6_combined_main_5s.csv": {
+"order_equal": true,
+"max_abs_diff": 0.0
+},
+"uhi_v6_hycean_main_5s.csv": {
+"order_equal": true,
+"max_abs_diff": 0.0
+},
+"uhi_v6_rocky_main_5s.csv": {
+"order_equal": true,
+"max_abs_diff": 0.0
+}
+},
+"alive": {
+"rocky_main_5s": {
+"v60_gt0": 495,
+"v61_gt0": 255,
+"v60_ge001": 140,
+"v61_ge001": 130
+},
+"rocky_madhu_5s": {
+"v60_gt0": 495,
+"v61_gt0": 255,
+"v60_ge001": 140,
+"v61_ge001": 130
+},
+"hycean_main_5s": {
+"v60_gt0": 242,
+"v61_gt0": 71,
+"v60_ge001": 22,
+"v61_ge001": 22
+},
+"hycean_madhu_5s": {
+"v60_gt0": 1213,
+"v61_gt0": 1021,
+"v60_ge001": 653,
+"v61_ge001": 626
+},
+"combined_main_5s": {
+"v60_gt0": 530,
+"v61_gt0": 287,
+"v60_ge001": 166,
+"v61_ge001": 148
+},
+"combined_madhu_5s": {
+"v60_gt0": 1223,
+"v61_gt0": 1026,
+"v60_ge001": 692,
+"v61_ge001": 638
+},
+"rocky_main_3s": {
+"v60_gt0": 495,
+"v61_gt0": 255,
+"v60_ge001": 140,
+"v61_ge001": 130
+},
+"rocky_madhu_3s": {
+"v60_gt0": 495,
+"v61_gt0": 255,
+"v60_ge001": 140,
+"v61_ge001": 130
+},
+"hycean_main_3s": {
+"v60_gt0": 242,
+"v61_gt0": 71,
+"v60_ge001": 22,
+"v61_ge001": 22
+},
+"hycean_madhu_3s": {
+"v60_gt0": 1213,
+"v61_gt0": 1021,
+"v60_ge001": 653,
+"v61_ge001": 626
+},
+"combined_main_3s": {
+"v60_gt0": 530,
+"v61_gt0": 287,
+"v60_ge001": 166,
+"v61_ge001": 148
+},
+"combined_madhu_3s": {
+"v60_gt0": 1223,
+"v61_gt0": 1026,
+"v60_ge001": 692,
+"v61_ge001": 638
+}
+},
+"innes_vs_madhu_v61": {
+"5s": {
+"alive_innes": 71,
+"alive_madhu": 1021,
+"alive_innes_001": 22,
+"alive_madhu_001": 626,
+"top10_overlap": 0,
+"spearman_both": 0.608,
+"UHI_max_innes": 0.0266,
+"UHI_max_madhu": 0.1926,
+"top10_innes": [
+"Kepler-1630 b",
+"Kapteyn c",
+"Wolf 1061 d",
+"GJ 3323 c",
+"GJ 1289 b",
+"GJ 682 c",
+"GJ 180 d",
+"tau Cet f",
+"Kepler-441 b",
+"Kepler-174 d"
+],
+"top10_madhu": [
+"TOI-2257 b",
+"K2-332 b",
+"TOI-7166 b",
+"K2-125 b",
+"K2-286 b",
+"TOI-2094 b",
+"K2-18 b",
+"Kepler-1996 b",
+"LHS 1140 b",
+"Kepler-705 b"
+],
+"combined_top10_overlap": 8
+},
+"3s": {
+"alive_innes": 71,
+"alive_madhu": 1021,
+"alive_innes_001": 22,
+"alive_madhu_001": 626,
+"top10_overlap": 1,
+"spearman_both": 0.567,
+"UHI_max_innes": 0.0623,
+"UHI_max_madhu": 0.2051,
+"top10_innes": [
+"Kepler-1630 b",
+"Wolf 1061 d",
+"Kapteyn c",
+"GJ 1289 b",
+"GJ 3323 c",
+"tau Cet f",
+"GJ 180 d",
+"GJ 682 c",
+"Kepler-441 b",
+"HD 20794 f"
+],
+"top10_madhu": [
+"TOI-561 e",
+"TOI-2257 b",
+"Kepler-174 d",
+"Kepler-1630 b",
+"K2-286 b",
+"Kepler-1653 b",
+"Kepler-1455 b",
+"Kepler-1996 b",
+"Kepler-705 b",
+"Kepler-437 b"
+],
+"combined_top10_overlap": 7
+}
+}
+}
+rocky_5s {'overlap': 10, 'entran': [], 'salen': [], 'spearman_alive001': 0.954, 'max_abs_dUHI': 0.0097}
+    [('GJ 273 b', 0.287, 1), ('Wolf 1061 c', 0.2489, 2), ('GJ 1061 d', 0.2219, 3), ('Proxima Cen b', 0.202, 4), ('GJ 3378 b', 0.1645, 5), ('Ross 128 b', 0.1634, 6), ('GJ 251 b', 0.1456, 7), ('GJ 682 b', 0.1366, 8), ('GJ 433 d', 0.1048, 9), ('Gl 725 B c', 0.0991, 10)]
+hycean_5s {'overlap': 7, 'entran': ['tau Cet f', 'Kepler-441 b', 'Kepler-174 d'], 'salen': ['Kepler-399 d', 'Kepler-230 c', 'Kepler-386 c'], 'spearman_alive001': 1.0, 'max_abs_dUHI': 0.0058}
+    [('Kepler-1630 b', 0.0266, 1), ('Kapteyn c', 0.0225, 2), ('Wolf 1061 d', 0.0186, 3), ('GJ 3323 c', 0.0125, 4), ('GJ 1289 b', 0.0108, 5), ('GJ 682 c', 0.006, 6), ('GJ 180 d', 0.0042, 9), ('tau Cet f', 0.0041, 11), ('Kepler-441 b', 0.004, 12), ('Kepler-174 d', 0.0033, 15)]
+combined_5s {'overlap': 10, 'entran': [], 'salen': [], 'spearman_alive001': 0.923, 'max_abs_dUHI': 0.0097}
+    [('GJ 273 b', 0.287, 1), ('Wolf 1061 c', 0.2489, 2), ('GJ 1061 d', 0.222, 3), ('Proxima Cen b', 0.2022, 4), ('GJ 3378 b', 0.1645, 5), ('Ross 128 b', 0.1634, 6), ('GJ 251 b', 0.1456, 7), ('GJ 682 b', 0.1366, 8), ('GJ 433 d', 0.1048, 9), ('Gl 725 B c', 0.1012, 10)]
+rocky_3s {'overlap': 10, 'entran': [], 'salen': [], 'spearman_alive001': 0.971, 'max_abs_dUHI': 0.0105}
+    [('GJ 273 b', 0.2874, 1), ('Wolf 1061 c', 0.2489, 2), ('Kepler-442 b', 0.2303, 3), ('GJ 1061 d', 0.2264, 4), ('Proxima Cen b', 0.202, 5), ('GJ 3378 b', 0.1993, 6), ('Ross 128 b', 0.1645, 7), ('GJ 251 b', 0.1467, 8), ('L 98-59 f', 0.1456, 9), ('TRAPPIST-1 e', 0.1449, 10)]
+hycean_3s {'overlap': 10, 'entran': [], 'salen': [], 'spearman_alive001': 0.999, 'max_abs_dUHI': 0.0058}
+    [('Kepler-1630 b', 0.0623, 1), ('Wolf 1061 d', 0.0414, 2), ('Kapteyn c', 0.0336, 3), ('GJ 1289 b', 0.031, 4), ('GJ 3323 c', 0.0249, 5), ('tau Cet f', 0.0115, 6), ('GJ 180 d', 0.0107, 7), ('GJ 682 c', 0.0084, 8), ('Kepler-441 b', 0.0083, 9), ('HD 20794 f', 0.0076, 10)]
+combined_3s {'overlap': 10, 'entran': [], 'salen': [], 'spearman_alive001': 0.954, 'max_abs_dUHI': 0.0105}
+    [('GJ 273 b', 0.2874, 1), ('Wolf 1061 c', 0.2489, 2), ('Kepler-442 b', 0.2303, 3), ('GJ 1061 d', 0.2264, 4), ('Proxima Cen b', 0.2022, 5), ('GJ 3378 b', 0.1993, 6), ('Ross 128 b', 0.1645, 7), ('GJ 251 b', 0.1467, 8), ('L 98-59 f', 0.1456, 9), ('TRAPPIST-1 e', 0.1449, 10)]
+    version  thr    branch              variant  top10_overlap  spearman                                                         salen  material
+60     v6.1    5     rocky           pA1_rocoso              8     0.982                                         Ross 128 b;Gl 725 B c     False
+61     v6.1    5     rocky          pA2_volatil              4     0.947   Wolf 1061 c;GJ 3378 b;GJ 251 b;GJ 682 b;GJ 433 d;Gl 725 B c      True
+62     v6.1    5     rocky             pA3_ck17              5     0.959             Wolf 1061 c;GJ 251 b;GJ 682 b;GJ 433 d;Gl 725 B c      True
+63     v6.1    5     rocky             pA4_empM              9     0.998                                                    Gl 725 B c     False
+64     v6.1    5     rocky          pA5_empM_P5              9     0.997                                                    Gl 725 B c     False
+65     v6.1    5     rocky        pB1_msini_min              9     0.993                                                    Gl 725 B c     False
+66     v6.1    5     rocky     pB2_msini_howard             10     0.993                                                                   False
+67     v6.1    5     rocky          pC1_mr_ck17             10     0.962                                                                   False
+68     v6.1    5     rocky  pD1_linea_earthlike             10     0.934                                                                   False
+69     v6.1    5     rocky     pD2_linea_h2o100             10     0.983                                                                   False
+70     v6.1    5    hycean           pA1_rocoso              9     0.970                                                     tau Cet f     False
+71     v6.1    5    hycean          pA2_volatil              9     0.963                                                  Kepler-174 d     False
+72     v6.1    5    hycean             pA3_ck17              9     0.968                                                  Kepler-174 d     False
+73     v6.1    5    hycean             pA4_empM             10     0.998                                                                   False
+74     v6.1    5    hycean          pA5_empM_P5             10     0.973                                                                   False
+75     v6.1    5    hycean        pB1_msini_min              7     0.926                           tau Cet f;Kepler-441 b;Kepler-174 d     False
+76     v6.1    5    hycean     pB2_msini_howard              9     0.969                                                  Kepler-174 d     False
+77     v6.1    5    hycean          pC1_mr_ck17              9     0.960                                                      GJ 180 d     False
+78     v6.1    5    hycean  pD1_linea_earthlike              9     0.979                                                  Kepler-174 d     False
+79     v6.1    5    hycean     pD2_linea_h2o100             10     1.000                                                                   False
+80     v6.1    5  combined           pA1_rocoso              8     0.978                                         Ross 128 b;Gl 725 B c     False
+81     v6.1    5  combined          pA2_volatil              4     0.945   Wolf 1061 c;GJ 3378 b;GJ 251 b;GJ 682 b;GJ 433 d;Gl 725 B c      True
+82     v6.1    5  combined             pA3_ck17              5     0.958             Wolf 1061 c;GJ 251 b;GJ 682 b;GJ 433 d;Gl 725 B c      True
+83     v6.1    5  combined             pA4_empM             10     0.999                                                                   False
+84     v6.1    5  combined          pA5_empM_P5              9     0.996                                                    Gl 725 B c     False
+85     v6.1    5  combined        pB1_msini_min              9     0.991                                                    Gl 725 B c     False
+86     v6.1    5  combined     pB2_msini_howard             10     0.993                                                                   False
+87     v6.1    5  combined          pC1_mr_ck17             10     0.963                                                                   False
+88     v6.1    5  combined  pD1_linea_earthlike             10     0.965                                                                   False
+89     v6.1    5  combined     pD2_linea_h2o100             10     0.984                                                                   False
+90     v6.1    3     rocky           pA1_rocoso              6     0.984               Proxima Cen b;Ross 128 b;L 98-59 f;TRAPPIST-1 e      True
+91     v6.1    3     rocky          pA2_volatil              4     0.952  GJ 273 b;Wolf 1061 c;GJ 3378 b;Ross 128 b;GJ 251 b;L 98-59 f      True
+92     v6.1    3     rocky             pA3_ck17              4     0.960  GJ 273 b;Wolf 1061 c;GJ 3378 b;Ross 128 b;GJ 251 b;L 98-59 f      True
+93     v6.1    3     rocky             pA4_empM              8     0.999                                            GJ 251 b;L 98-59 f     False
+94     v6.1    3     rocky          pA5_empM_P5              7     0.997                                 Ross 128 b;GJ 251 b;L 98-59 f     False
+95     v6.1    3     rocky        pB1_msini_min              9     0.995                                                  TRAPPIST-1 e     False
+96     v6.1    3     rocky     pB2_msini_howard              9     0.996                                                  TRAPPIST-1 e     False
+97     v6.1    3     rocky          pC1_mr_ck17              8     0.963                                            GJ 251 b;L 98-59 f     False
+98     v6.1    3     rocky  pD1_linea_earthlike              9     0.934                                                  TRAPPIST-1 e     False
+99     v6.1    3     rocky     pD2_linea_h2o100             10     0.984                                                                   False
+100    v6.1    3    hycean           pA1_rocoso              7     0.968                                 tau Cet f;GJ 682 c;HD 20794 f     False
+101    v6.1    3    hycean          pA2_volatil             10     0.965                                                                   False
+102    v6.1    3    hycean             pA3_ck17              9     0.970                                                  Kepler-441 b     False
+103    v6.1    3    hycean             pA4_empM             10     0.997                                                                   False
+104    v6.1    3    hycean          pA5_empM_P5             10     0.977                                                                   False
+105    v6.1    3    hycean        pB1_msini_min              8     0.938                                        tau Cet f;Kepler-441 b     False
+106    v6.1    3    hycean     pB2_msini_howard              9     0.975                                                  Kepler-441 b     False
+107    v6.1    3    hycean          pC1_mr_ck17              9     0.958                                                    HD 20794 f     False
+108    v6.1    3    hycean  pD1_linea_earthlike             10     0.986                                                                   False
+109    v6.1    3    hycean     pD2_linea_h2o100             10     1.000                                                                   False
+110    v6.1    3  combined           pA1_rocoso              6     0.979               Proxima Cen b;Ross 128 b;L 98-59 f;TRAPPIST-1 e      True
+111    v6.1    3  combined          pA2_volatil              4     0.948  GJ 273 b;Wolf 1061 c;GJ 3378 b;Ross 128 b;GJ 251 b;L 98-59 f      True
+112    v6.1    3  combined             pA3_ck17              4     0.958  GJ 273 b;Wolf 1061 c;GJ 3378 b;Ross 128 b;GJ 251 b;L 98-59 f      True
+113    v6.1    3  combined             pA4_empM              8     0.999                                            GJ 251 b;L 98-59 f     False
+114    v6.1    3  combined          pA5_empM_P5              7     0.997                                 Ross 128 b;GJ 251 b;L 98-59 f     False
+115    v6.1    3  combined        pB1_msini_min              9     0.994                                                  TRAPPIST-1 e     False
+116    v6.1    3  combined     pB2_msini_howard              9     0.997                                                  TRAPPIST-1 e     False
+117    v6.1    3  combined          pC1_mr_ck17              8     0.964                                            GJ 251 b;L 98-59 f     False
+118    v6.1    3  combined  pD1_linea_earthlike              9     0.962                                                  TRAPPIST-1 e     False
+119    v6.1    3  combined     pD2_linea_h2o100             10     0.985                                                                   False

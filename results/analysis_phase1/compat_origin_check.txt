@@ -1,0 +1,2 @@
+uhi_code.py (v5.2, md5 identica) re-ejecutado en este box vs data/uhi_results_v52.csv: {'UHI_rank': 1.3877787807814457e-16, 'P_alive': 0.0, 'UHI_cond_med': 9.159339953157541e-15, 'P_top10': 0.0, 'rank_med': 0.0, 'UHI_med': 2.7755575615628914e-16, 'UHI_mean': 1.1102230246251565e-16, 'ESI_med': 2.220446049250313e-16}
+numpy 2.5.4 python 3.13.5

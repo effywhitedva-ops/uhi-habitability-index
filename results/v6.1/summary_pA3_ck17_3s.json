@@ -1,0 +1,42 @@
+{
+ "tag": "pA3_ck17_3s",
+ "cfg": {
+  "climate_mode": "rot",
+  "xuv": true,
+  "shore_model": "xuv4",
+  "xuv_star": "mors",
+  "d3": true,
+  "branches": true,
+  "hycean_climate": "innes",
+  "class_prior": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "msini": "iso",
+  "mr": "otegi",
+  "rock_line": "h2o50",
+  "rs_floor": true
+ },
+ "thr": 3.0,
+ "draws": 10000,
+ "seconds": 154,
+ "version": "v6.1-fase1 (2026-11-20)",
+ "rocky": {
+  "scored": 6112,
+  "alive": 249
+ },
+ "hycean": {
+  "scored": 6112,
+  "alive": 77
+ },
+ "combined": {
+  "scored": 6112,
+  "alive": 288
+ },
+ "alive_P001": {
+  "rocky": 115,
+  "hycean": 25,
+  "combined": 135
+ }
+}

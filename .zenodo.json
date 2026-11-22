@@ -1,5 +1,5 @@
 {
-  "title": "Code and data associated with the RNAAS note \"Unified Habitability Index (UHI) v5.2\" (AAS83819)",
+  "title": "UHI v6.1: facility-specific probabilistic priority lists of temperate exoplanets for JWST and ELT (code, data and Sobol N=512 sensitivity)",
   "upload_type": "software",
   "creators": [
     {
@@ -9,14 +9,16 @@
     }
   ],
   "license": "MIT",
-  "version": "5.2.2",
+  "version": "6.1",
   "keywords": [
     "exoplanets",
-    "habitability",
-    "observability",
+    "target prioritization",
+    "atmospheric characterization",
     "JWST",
     "ELT",
-    "Monte Carlo"
+    "Monte Carlo",
+    "Sobol sensitivity analysis",
+    "cosmic shoreline"
   ],
-  "description": "<p>Companion code and data for the RNAAS research note by E. Viridis (manuscript AAS83819, under review at Research Notes of the AAS). This is the frozen v5.2.1 reproducibility package; v5.2.1 differs from v5.2 only in reference corrections and an expanded AI disclosure (no scientific changes).</p>\n<p>v5.2.2 updates the manuscript files to the length-revised version resubmitted to RNAAS on 19 Nov 2026 (no changes to code, data, or results).</p>\n<p>&nbsp;</p>\n<p>UHI is a probabilistic habitability-and-observability index: a Dirichlet-weighted geometric mean of seven sub-indices, evaluated by Monte Carlo (10,000 draws per planet, seed 42) over the NASA Exoplanet Archive pscomppars table. Planets are ranked by UHI_rank = P(UHI &gt; 0) x median(UHI | UHI &gt; 0).</p>\n<p>&nbsp;</p>\n<p>Contents (single ZIP mirroring the GitHub release; see README.md inside):</p>\n<ul>\n<li>data/: dated catalog snapshot pscomppars_2026-11-18 (CSV and Parquet; 6,470 rows). Source: NASA Exoplanet Archive (NASA/IPAC).</li>\n<li>results/: full results for 6,112 scored planets (CSV and AAS machine-readable table .mrt, which lists every column with its units), 3-sigma variant, Earth/Venus/Mars control anchors and the runaway-greenhouse veto sweep. UHI and sub-indices are dimensionless (0-1); radius and mass in Earth units; instellation in Earth units.</li>\n<li>tables/: summary tables and statistics (CSV, JSON, Markdown).</li>\n<li>figures/: all figures (PDF and PNG).</li>\n<li>src/, run_uhi_v52.py, notebooks/: Python code that regenerates everything from the snapshot (requirements.txt lists dependencies).</li>\n<li>sens_out_v5/: Sobol/LHS sensitivity outputs.</li>\n<li>manuscript/: LaTeX source (AASTeX 7) and PDF of the submitted note.</li>\n</ul>\n<p>PHL Habitable Worlds Catalog data are not redistributed; the code downloads them at run time.</p>\n<p>&nbsp;</p>\n<p>License: code MIT; data, results and figures CC BY 4.0.</p>"
+  "description": "<p>Version 6.1 of the UHI code and data products. It assigns temperate exoplanets from the NASA Exoplanet Archive (pscomppars snapshot of 2026-11-18; 6,112 planets scored) a probabilistic priority for atmospheric follow-up. Ten thousand realizations per planet carry catalogue uncertainties through a smooth tidal-locking climate treatment, atmospheric retention under cumulative stellar XUV (cosmic shoreline), a per-draw rocky / Hycean / gas-rich class, and a detection model for JWST (transiting) or ELT/PCS reflected light (non-transiting). Lists are given per facility and per class.</p><p><strong>Main numbers.</strong> Planets with a non-zero survival probability at 5&sigma; and 3&sigma;: 255 rocky, 71 Hycean, 287 combined.</p><p><strong>Global sensitivity.</strong> Saltelli&ndash;Sobol, N = 512, 32 parameters, 17,408 evaluations per threshold; 95% bootstrap intervals on mean total-order indices. Rocky branch converged: all ten leading indices have a half-width below 0.05 at both thresholds (9 of 10 also on the full-width reading). The position and width of the cosmic shoreline dominate (S<sub>T</sub> 0.22 and 0.12 at 5&sigma;; 0.25 and 0.14 at 3&sigma;). <strong>The Hycean branch is INDICATIVE, not converged</strong> (6 of 10 on the half-width reading; 11 of its 17 outputs are degenerate, so a larger N would not help); it is led by the H<sub>2</sub> envelope pressure (S<sub>T</sub> 0.71).</p><p><strong>Example use.</strong> To shortlist JWST transmission targets among likely rocky worlds, filter results/v6.1/uhi_v6_rocky_main_5s.csv to transiting planets and sort by UHI_rank; the Sobol tables then show which inputs would most change that order.</p><p>Contents: Python source and tests, the catalogue snapshot and auxiliary tables, per-branch results for 24 variants (12 prior and model variants at two thresholds), prior-robustness and Phase 1 check tables, Sobol outputs sufficient to regenerate the report, figures, run logs and the pinned environment. See README.md and CHANGELOG.md in the archive.</p><p>This version supersedes, but does not replace, the frozen v5.2 package (version DOI 10.5281/zenodo.24358996), which remains citable on its own.</p><p>AI use: two custom LLM-based agents (Shoggothsito, implementation and execution; Aetherios, technical review) assisted under the author's direction; see docs/AI_DISCLOSURE.md for the validation steps.</p><p>License: code MIT; data, results and figures CC BY 4.0. NASA Exoplanet Archive data are public (NASA/IPAC).</p>"
 }

@@ -1,0 +1,194 @@
+{
+ "SYN Earth (nt)_5s": {
+  "UHI": 0.1279,
+  "pct": 99.869,
+  "pos": 9,
+  "P_alive": 0.9899,
+  "P_ret": 0.971,
+  "ARM": 0.821
+ },
+ "SYN Earth (tr)_5s": {
+  "UHI": 0.1094,
+  "pct": 99.869,
+  "pos": 9,
+  "P_alive": 1.0,
+  "P_ret": 0.975,
+  "ARM": 0.848
+ },
+ "SYN Venus (tr)_5s": {
+  "UHI": 0.0,
+  "pct": 0.0,
+  "pos": 496,
+  "P_alive": 0.0,
+  "P_ret": 0.838,
+  "ARM": 0.429
+ },
+ "SYN Mars (tr)_5s": {
+  "UHI": 0.0,
+  "pct": 0.0,
+  "pos": 496,
+  "P_alive": 0.0,
+  "P_ret": 0.341,
+  "ARM": -0.179
+ },
+ "SYN Venus (nt)_5s": {
+  "UHI": 0.0,
+  "pct": 0.0,
+  "pos": 496,
+  "P_alive": 0.0,
+  "P_ret": 0.827,
+  "ARM": 0.41
+ },
+ "SYN Mars (nt)_5s": {
+  "UHI": 0.0,
+  "pct": 0.0,
+  "pos": 496,
+  "P_alive": 0.0,
+  "P_ret": 0.325,
+  "ARM": -0.197
+ },
+ "prob_conservation_rocky_5s": 1.1102230246251565e-16,
+ "evidence_col_rocky_5s": "True",
+ "prob_conservation_hycean_5s": 1.1102230246251565e-16,
+ "evidence_col_hycean_5s": "True",
+ "prob_conservation_combined_5s": 1.1102230246251565e-16,
+ "evidence_col_combined_5s": "True",
+ "SYN Earth (nt)_3s": {
+  "UHI": 0.4125,
+  "pct": 100.0,
+  "pos": 1,
+  "P_alive": 0.9899,
+  "P_ret": 0.971,
+  "ARM": 0.821
+ },
+ "SYN Earth (tr)_3s": {
+  "UHI": 0.3746,
+  "pct": 100.0,
+  "pos": 1,
+  "P_alive": 1.0,
+  "P_ret": 0.975,
+  "ARM": 0.848
+ },
+ "SYN Venus (tr)_3s": {
+  "UHI": 0.0,
+  "pct": 0.0,
+  "pos": 496,
+  "P_alive": 0.0,
+  "P_ret": 0.838,
+  "ARM": 0.429
+ },
+ "SYN Mars (tr)_3s": {
+  "UHI": 0.0,
+  "pct": 0.0,
+  "pos": 496,
+  "P_alive": 0.0,
+  "P_ret": 0.341,
+  "ARM": -0.179
+ },
+ "SYN Venus (nt)_3s": {
+  "UHI": 0.0,
+  "pct": 0.0,
+  "pos": 496,
+  "P_alive": 0.0,
+  "P_ret": 0.827,
+  "ARM": 0.41
+ },
+ "SYN Mars (nt)_3s": {
+  "UHI": 0.0,
+  "pct": 0.0,
+  "pos": 496,
+  "P_alive": 0.0,
+  "P_ret": 0.325,
+  "ARM": -0.197
+ },
+ "prob_conservation_rocky_3s": 1.1102230246251565e-16,
+ "evidence_col_rocky_3s": "True",
+ "prob_conservation_hycean_3s": 1.1102230246251565e-16,
+ "evidence_col_hycean_3s": "True",
+ "prob_conservation_combined_3s": 1.1102230246251565e-16,
+ "evidence_col_combined_3s": "True",
+ "TRAPPIST-1 b": {
+  "P_ret_all": -1.731,
+  "P_retain_med": 3e-05,
+  "P_R": 0.9931,
+  "P_H": 0.0032,
+  "P_G": 0.0037,
+  "evid": "densidad",
+  "IXUV": 886.2
+ },
+ "TRAPPIST-1 c": {
+  "P_ret_all": -1.49,
+  "P_retain_med": 0.0003,
+  "P_R": 0.9977,
+  "P_H": 0.0013,
+  "P_G": 0.001,
+  "evid": "densidad",
+  "IXUV": 474.1
+ },
+ "LHS 3844 b": {
+  "P_ret_all": -2.297,
+  "P_retain_med": 0.0,
+  "P_R": 0.9379,
+  "P_H": 0.0296,
+  "P_G": 0.0325,
+  "evid": "densidad",
+  "IXUV": 7256.2
+ },
+ "TRAPPIST-1 e": {
+  "P_ret_all": -1.352,
+  "P_retain_med": 0.00093,
+  "P_R": 0.9963,
+  "P_H": 0.0015,
+  "P_G": 0.0022,
+  "evid": "densidad",
+  "IXUV": 137.2
+ },
+ "LHS 1140 b": {
+  "P_ret_all": 0.522,
+  "P_retain_med": 0.88965,
+  "P_R": 0.5446,
+  "P_H": 0.2304,
+  "P_G": 0.225,
+  "evid": "densidad",
+  "IXUV": 34.1
+ },
+ "K2-18 b": {
+  "P_ret_all": 0.921,
+  "P_retain_med": 0.99552,
+  "P_R": 0.1021,
+  "P_H": 0.3384,
+  "P_G": 0.5595,
+  "evid": "densidad",
+  "IXUV": 17.5
+ },
+ "TOI-270 d": {
+  "P_ret_all": 0.067,
+  "P_retain_med": 0.68729,
+  "P_R": 0.0002,
+  "P_H": 0.5033,
+  "P_G": 0.4965,
+  "evid": "densidad",
+  "IXUV": 41.2
+ },
+ "K2-18 b_hyc": {
+  "P_H": 0.3384,
+  "alive_innes": 0.0001,
+  "alive_madhu": 0.3375,
+  "UHI_innes": 0.0,
+  "UHI_madhu": 0.1079
+ },
+ "TOI-270 d_hyc": {
+  "P_H": 0.5033,
+  "alive_innes": 0.0,
+  "alive_madhu": 0.5026,
+  "UHI_innes": 0.0,
+  "UHI_madhu": 0.0841
+ },
+ "LHS 1140 b_hyc": {
+  "P_H": 0.2304,
+  "alive_innes": 0.0105,
+  "alive_madhu": 0.2262,
+  "UHI_innes": 0.0025,
+  "UHI_madhu": 0.1053
+ }
+}

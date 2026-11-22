@@ -1,0 +1,212 @@
+{
+ "5s": {
+  "max_abs_diff_other_subindices": {
+   "S_fis_med": 0.0,
+   "S_atm_med": 0.0,
+   "S_estrella_med": 0.0,
+   "S_geo_med": 0.0,
+   "S_mag_med": 0.0,
+   "S_obs_med": 0.0,
+   "P_H": 0.0,
+   "tloss_all_med": 0.0
+  },
+  "alive_innes": 242,
+  "alive_madhu": 1213,
+  "alive_both": 242,
+  "alive_innes_only": 0,
+  "alive_madhu_only": 971,
+  "madhu_alive_with_S_above_innes_max": 1148,
+  "P_clima_H_innes_mean_on_madhu_alive": 0.0217,
+  "S_med_quantiles_madhu_alive": [
+   1.23,
+   9.445,
+   112.573
+  ],
+  "S_med_quantiles_innes_alive": [
+   0.191,
+   22.066,
+   127.234
+  ],
+  "spearman_on_both_alive": 0.64,
+  "top10_innes": [
+   "Kepler-1630 b",
+   "Kapteyn c",
+   "Wolf 1061 d",
+   "GJ 3323 c",
+   "GJ 1289 b",
+   "GJ 682 c",
+   "Kepler-399 d",
+   "Kepler-230 c",
+   "GJ 180 d",
+   "Kepler-386 c"
+  ],
+  "top10_madhu": [
+   "TOI-2257 b",
+   "K2-332 b",
+   "TOI-7166 b",
+   "K2-125 b",
+   "K2-286 b",
+   "TOI-2094 b",
+   "K2-18 b",
+   "Kepler-1996 b",
+   "LHS 1140 b",
+   "Kepler-705 b"
+  ],
+  "overlap": [],
+  "innes_top10_rank_in_madhu": {
+   "Kepler-1630 b": 31,
+   "Kapteyn c": 91,
+   "Wolf 1061 d": 198,
+   "GJ 3323 c": 216,
+   "GJ 1289 b": 224,
+   "GJ 682 c": 190,
+   "Kepler-399 d": 130,
+   "Kepler-230 c": 331,
+   "GJ 180 d": 249,
+   "Kepler-386 c": 180
+  },
+  "madhu_top10_rank_in_innes": {
+   "TOI-2257 b": 65,
+   "K2-332 b": 243,
+   "TOI-7166 b": 243,
+   "K2-125 b": 243,
+   "K2-286 b": 243,
+   "TOI-2094 b": 243,
+   "K2-18 b": 217,
+   "Kepler-1996 b": 243,
+   "LHS 1140 b": 24,
+   "Kepler-705 b": 243
+  },
+  "madhu_top10_S_med": {
+   "TOI-2257 b": 0.579,
+   "K2-332 b": 1.186,
+   "TOI-7166 b": 1.073,
+   "K2-125 b": 1.788,
+   "K2-286 b": 3.5,
+   "TOI-2094 b": 1.703,
+   "K2-18 b": 1.068,
+   "Kepler-1996 b": 5.676,
+   "LHS 1140 b": 0.432,
+   "Kepler-705 b": 0.833
+  },
+  "innes_top10_S_med": {
+   "Kepler-1630 b": 0.155,
+   "Kapteyn c": 0.122,
+   "Wolf 1061 d": 0.048,
+   "GJ 3323 c": 0.08,
+   "GJ 1289 b": 0.088,
+   "GJ 682 c": 0.191,
+   "Kepler-399 d": 4.622,
+   "Kepler-230 c": 4.329,
+   "GJ 180 d": 0.181,
+   "Kepler-386 c": 15.341
+  },
+  "ratio_UHI_cond_on_both": 0.828
+ },
+ "3s": {
+  "max_abs_diff_other_subindices": {
+   "S_fis_med": 0.0,
+   "S_atm_med": 0.0,
+   "S_estrella_med": 0.0,
+   "S_geo_med": 0.0,
+   "S_mag_med": 0.0,
+   "S_obs_med": 0.0,
+   "P_H": 0.0,
+   "tloss_all_med": 0.0
+  },
+  "alive_innes": 242,
+  "alive_madhu": 1213,
+  "alive_both": 242,
+  "alive_innes_only": 0,
+  "alive_madhu_only": 971,
+  "madhu_alive_with_S_above_innes_max": 1148,
+  "P_clima_H_innes_mean_on_madhu_alive": 0.0217,
+  "S_med_quantiles_madhu_alive": [
+   1.23,
+   9.445,
+   112.573
+  ],
+  "S_med_quantiles_innes_alive": [
+   0.191,
+   22.066,
+   127.234
+  ],
+  "spearman_on_both_alive": 0.645,
+  "top10_innes": [
+   "Kepler-1630 b",
+   "Wolf 1061 d",
+   "Kapteyn c",
+   "GJ 1289 b",
+   "GJ 3323 c",
+   "tau Cet f",
+   "GJ 180 d",
+   "GJ 682 c",
+   "Kepler-441 b",
+   "HD 20794 f"
+  ],
+  "top10_madhu": [
+   "TOI-561 e",
+   "TOI-2257 b",
+   "Kepler-174 d",
+   "Kepler-1630 b",
+   "K2-286 b",
+   "Kepler-1653 b",
+   "Kepler-1455 b",
+   "Kepler-1996 b",
+   "Kepler-705 b",
+   "Kepler-437 b"
+  ],
+  "overlap": [
+   "Kepler-1630 b"
+  ],
+  "innes_top10_rank_in_madhu": {
+   "Kepler-1630 b": 4,
+   "Wolf 1061 d": 161,
+   "Kapteyn c": 97,
+   "GJ 1289 b": 157,
+   "GJ 3323 c": 182,
+   "tau Cet f": 99,
+   "GJ 180 d": 184,
+   "GJ 682 c": 210,
+   "Kepler-441 b": 100,
+   "HD 20794 f": 98
+  },
+  "madhu_top10_rank_in_innes": {
+   "TOI-561 e": 243,
+   "TOI-2257 b": 66,
+   "Kepler-174 d": 11,
+   "Kepler-1630 b": 1,
+   "K2-286 b": 243,
+   "Kepler-1653 b": 243,
+   "Kepler-1455 b": 243,
+   "Kepler-1996 b": 243,
+   "Kepler-705 b": 243,
+   "Kepler-437 b": 243
+  },
+  "madhu_top10_S_med": {
+   "TOI-561 e": 4.787,
+   "TOI-2257 b": 0.579,
+   "Kepler-174 d": 0.465,
+   "Kepler-1630 b": 0.155,
+   "K2-286 b": 3.5,
+   "Kepler-1653 b": 1.032,
+   "Kepler-1455 b": 1.78,
+   "Kepler-1996 b": 5.676,
+   "Kepler-705 b": 0.833,
+   "Kepler-437 b": 2.174
+  },
+  "innes_top10_S_med": {
+   "Kepler-1630 b": 0.155,
+   "Wolf 1061 d": 0.048,
+   "Kapteyn c": 0.122,
+   "GJ 1289 b": 0.088,
+   "GJ 3323 c": 0.08,
+   "tau Cet f": 0.282,
+   "GJ 180 d": 0.181,
+   "GJ 682 c": 0.191,
+   "Kepler-441 b": 0.293,
+   "HD 20794 f": 0.352
+  },
+  "ratio_UHI_cond_on_both": 0.84
+ }
+}

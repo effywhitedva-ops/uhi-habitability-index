@@ -1,0 +1,15 @@
+diff --git a/src/Mors/star.py b/src/Mors/star.py
+index 700ea0d..1ee3e11 100644
+--- a/src/Mors/star.py
++++ b/src/Mors/star.py
+@@ -180,8 +180,8 @@ class Star:
+             # Lx() that is created calls Value with Quantity='Lx'. This function is then added to the Star 
+             # class using setattr on self.__class__. Technically this means that if the user makes multiple
+             # instances of Star, the next two lines will not be necessary.
+-            exec( "def "+track+"(self,Age):\n  return self.Value(Age=Age,Quantity='"+track+"')" )
+-            exec( "setattr( self.__class__ , '"+track+"' , "+track+" )" )
++            # UHI v6 patch (Python>=3.13: exec no longer writes to function locals): closure instead of exec
++            setattr(self.__class__, track, (lambda q: (lambda self, Age: self.Value(Age=Age, Quantity=q)))(track))
+             
+         return
+         

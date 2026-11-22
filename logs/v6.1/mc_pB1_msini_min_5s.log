@@ -1,0 +1,14 @@
+pB1_msini_min_5s 0 6112 0s
+pB1_msini_min_5s 500 6112 12s
+pB1_msini_min_5s 1000 6112 25s
+pB1_msini_min_5s 1500 6112 37s
+pB1_msini_min_5s 2000 6112 49s
+pB1_msini_min_5s 2500 6112 62s
+pB1_msini_min_5s 3000 6112 74s
+pB1_msini_min_5s 3500 6112 86s
+pB1_msini_min_5s 4000 6112 99s
+pB1_msini_min_5s 4500 6112 112s
+pB1_msini_min_5s 5000 6112 124s
+pB1_msini_min_5s 5500 6112 136s
+pB1_msini_min_5s 6000 6112 148s
+{"tag": "pB1_msini_min_5s", "cfg": {"climate_mode": "rot", "xuv": true, "shore_model": "xuv4", "xuv_star": "mors", "d3": true, "branches": true, "hycean_climate": "innes", "class_prior": [1.0, 1.0, 1.0], "msini": "min", "mr": "otegi", "rock_line": "h2o50", "rs_floor": true}, "thr": 5.0, "draws": 10000, "seconds": 151, "version": "v6.1-fase1 (2026-11-20)", "rocky": {"scored": 6112, "alive": 257}, "hycean": {"scored": 6112, "alive": 74}, "combined": {"scored": 6112, "alive": 291}, "alive_P001": {"rocky": 136, "hycean": 24, "combined": 156}}

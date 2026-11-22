@@ -1,0 +1,14 @@
+pB2_msini_howard_5s 0 6112 0s
+pB2_msini_howard_5s 500 6112 13s
+pB2_msini_howard_5s 1000 6112 26s
+pB2_msini_howard_5s 1500 6112 38s
+pB2_msini_howard_5s 2000 6112 50s
+pB2_msini_howard_5s 2500 6112 63s
+pB2_msini_howard_5s 3000 6112 75s
+pB2_msini_howard_5s 3500 6112 88s
+pB2_msini_howard_5s 4000 6112 100s
+pB2_msini_howard_5s 4500 6112 113s
+pB2_msini_howard_5s 5000 6112 125s
+pB2_msini_howard_5s 5500 6112 137s
+pB2_msini_howard_5s 6000 6112 150s
+{"tag": "pB2_msini_howard_5s", "cfg": {"climate_mode": "rot", "xuv": true, "shore_model": "xuv4", "xuv_star": "mors", "d3": true, "branches": true, "hycean_climate": "innes", "class_prior": [1.0, 1.0, 1.0], "msini": "howard", "mr": "otegi", "rock_line": "h2o50", "rs_floor": true}, "thr": 5.0, "draws": 10000, "seconds": 153, "version": "v6.1-fase1 (2026-11-20)", "rocky": {"scored": 6112, "alive": 253}, "hycean": {"scored": 6112, "alive": 75}, "combined": {"scored": 6112, "alive": 290}, "alive_P001": {"rocky": 133, "hycean": 22, "combined": 151}}

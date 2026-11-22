@@ -1,0 +1,14 @@
+pA1_rocoso_3s 0 6112 0s
+pA1_rocoso_3s 500 6112 13s
+pA1_rocoso_3s 1000 6112 25s
+pA1_rocoso_3s 1500 6112 38s
+pA1_rocoso_3s 2000 6112 50s
+pA1_rocoso_3s 2500 6112 63s
+pA1_rocoso_3s 3000 6112 75s
+pA1_rocoso_3s 3500 6112 87s
+pA1_rocoso_3s 4000 6112 100s
+pA1_rocoso_3s 4500 6112 113s
+pA1_rocoso_3s 5000 6112 125s
+pA1_rocoso_3s 5500 6112 138s
+pA1_rocoso_3s 6000 6112 150s
+{"tag": "pA1_rocoso_3s", "cfg": {"climate_mode": "rot", "xuv": true, "shore_model": "xuv4", "xuv_star": "mors", "d3": true, "branches": true, "hycean_climate": "innes", "class_prior": [2.0, 1.0, 1.0], "msini": "iso", "mr": "otegi", "rock_line": "h2o50", "rs_floor": true}, "thr": 3.0, "draws": 10000, "seconds": 153, "version": "v6.1-fase1 (2026-11-20)", "rocky": {"scored": 6112, "alive": 262}, "hycean": {"scored": 6112, "alive": 62}, "combined": {"scored": 6112, "alive": 289}, "alive_P001": {"rocky": 140, "hycean": 14, "combined": 154}}

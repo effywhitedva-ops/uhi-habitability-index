@@ -1,10 +1,18 @@
-# Versiones exactas del entorno de la corrida certificada v5.2 (Google Colab CPU, 18 nov 2026; Python 3.13)
-numpy==2.4.6
-scipy==1.16.3
-pandas==2.2.3
-# Tablas, figuras y MRT (generadas en el entorno local de verificacion)
+# Exact package versions of the environment used for the UHI v6.1 runs (Python 3.13.5, Linux).
+# Install with: python3.13 -m venv .venv && .venv/bin/pip install -r requirements.txt
+contourpy==1.4.0
+cycler==0.12.1
+dill==0.4.1
+fonttools==4.68.0
+kiwisolver==1.5.1
 matplotlib==3.11.2
-astropy==8.0.3
-pyarrow==26.0.1
-# Solo para re-ejecutar el analisis de Sobol (src/uhi_sens.py); no lo usa el script maestro
+multiprocess==0.70.19
+numpy==2.5.4
+packaging==26.3
+pandas==3.0.6
+pillow==13.0.0
+pyparsing==3.3.3
+python-dateutil==4.0.0
 SALib==1.6.0
+scipy==1.18.1
+tzdata==2026.6

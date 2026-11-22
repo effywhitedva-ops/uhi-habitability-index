@@ -1,0 +1,24 @@
+{
+ "5s": {
+  "alive": 242,
+  "alive_only_by_tail": 181,
+  "alive_physical": 61,
+  "tail_with_relRerr_gt_0p3": 165,
+  "max_UHI_tail": 0.0058,
+  "top10_tail": [
+   "Kepler-399 d",
+   "Kepler-230 c",
+   "Kepler-386 c"
+  ],
+  "sum_UHI_tail_share": 0.503
+ },
+ "3s": {
+  "alive": 242,
+  "alive_only_by_tail": 181,
+  "alive_physical": 61,
+  "tail_with_relRerr_gt_0p3": 165,
+  "max_UHI_tail": 0.0058,
+  "top10_tail": [],
+  "sum_UHI_tail_share": 0.323
+ }
+}

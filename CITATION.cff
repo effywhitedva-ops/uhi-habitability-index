@@ -1,8 +1,8 @@
 cff-version: 1.2.0
-message: "If you use this software or the UHI results, please cite it as below. The Zenodo DOI for this release is listed on the repository page."
-title: "Unified Habitability Index (UHI)"
-version: "5.2.2"
-date-released: 2026-11-19
+message: "If you use this software or its priority lists, please cite it using the metadata below. Cite the v6.1 version DOI shown on Zenodo for exact reproducibility."
+title: "UHI v6.1: facility-specific probabilistic priority lists of temperate exoplanets"
+version: "6.1"
+date-released: 2026-11-21
 authors:
   - family-names: Viridis
     given-names: Effy
@@ -13,14 +13,18 @@ doi: "10.5281/zenodo.24358421"
 repository-code: "https://github.com/effywhitedva-ops/uhi-habitability-index"
 keywords:
   - exoplanets
-  - habitability
-  - UHI
+  - target prioritization
+  - atmospheric characterization
   - JWST
   - ELT
+  - Monte Carlo
+  - Sobol sensitivity analysis
 abstract: >
-  The Unified Habitability Index (UHI) is a probabilistic
-  habitability-and-observability index: a Dirichlet-weighted geometric
-  mean of seven sub-indices, evaluated by Monte Carlo over the NASA
-  Exoplanet Archive pscomppars table. This release is v5.2.2
-  (2026-11-19): the v5.2 model with the length-revised RNAAS
-  manuscript (manuscript files only; no changes to code, data, or results).
+  Monte Carlo framework that turns NASA Exoplanet Archive uncertainties
+  into per-facility (JWST transiting, ELT/PCS reflected light) and
+  per-class (rocky, Hycean) priority lists for atmospheric
+  characterization, combining climate, cumulative XUV atmospheric
+  retention, per-draw composition and detectability. Version 6.1 adds a
+  converged Saltelli-Sobol analysis (N = 512) for the rocky branch; the
+  Hycean branch is released as indicative because its sensitivity
+  analysis does not converge.

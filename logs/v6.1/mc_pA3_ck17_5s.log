@@ -1,0 +1,14 @@
+pA3_ck17_5s 0 6112 0s
+pA3_ck17_5s 500 6112 13s
+pA3_ck17_5s 1000 6112 26s
+pA3_ck17_5s 1500 6112 39s
+pA3_ck17_5s 2000 6112 52s
+pA3_ck17_5s 2500 6112 65s
+pA3_ck17_5s 3000 6112 78s
+pA3_ck17_5s 3500 6112 91s
+pA3_ck17_5s 4000 6112 104s
+pA3_ck17_5s 4500 6112 117s
+pA3_ck17_5s 5000 6112 129s
+pA3_ck17_5s 5500 6112 141s
+pA3_ck17_5s 6000 6112 154s
+{"tag": "pA3_ck17_5s", "cfg": {"climate_mode": "rot", "xuv": true, "shore_model": "xuv4", "xuv_star": "mors", "d3": true, "branches": true, "hycean_climate": "innes", "class_prior": [1.0, 1.0, 1.0], "msini": "iso", "mr": "otegi", "rock_line": "h2o50", "rs_floor": true}, "thr": 5.0, "draws": 10000, "seconds": 157, "version": "v6.1-fase1 (2026-11-20)", "rocky": {"scored": 6112, "alive": 249}, "hycean": {"scored": 6112, "alive": 77}, "combined": {"scored": 6112, "alive": 288}, "alive_P001": {"rocky": 115, "hycean": 25, "combined": 135}}

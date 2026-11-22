@@ -1,0 +1,35 @@
+fin pA4_empM 5 rc=0 16:29
+fin pA1_rocoso 5 rc=0 16:29
+fin main 5 rc=0 16:29
+fin pA5_empM_P5 5 rc=0 16:29
+fin pA3_ck17 5 rc=0 16:29
+fin madhu 5 rc=0 16:29
+fin pA2_volatil 5 rc=0 16:29
+fin legacy 5 rc=0 16:29
+fin pB1_msini_min 5 rc=0 16:31
+fin pD1_linea_earthlike 5 rc=0 16:31
+fin pC1_mr_ck17 5 rc=0 16:31
+fin pD2_linea_h2o100 5 rc=0 16:31
+fin pB2_msini_howard 5 rc=0 16:31
+fin main 3 rc=0 16:31
+fin madhu 3 rc=0 16:31
+fin pA1_rocoso 3 rc=0 16:31
+fin pA3_ck17 3 rc=0 16:34
+fin pA5_empM_P5 3 rc=0 16:34
+fin pA2_volatil 3 rc=0 16:34
+fin pB1_msini_min 3 rc=0 16:34
+fin pA4_empM 3 rc=0 16:34
+fin pC1_mr_ck17 3 rc=0 16:34
+fin pB2_msini_howard 3 rc=0 16:34
+fin pD1_linea_earthlike 3 rc=0 16:34
+fin pD2_linea_h2o100 3 rc=0 16:36
+MC_V61_LISTO 16:36
+prior_sens rc=0
+test_v6 (compat v5.2) rc=0
+SOBOL_START 16:40
+sobol lanzado 5s pid=608630 3s pid=608631 2026-11-20 16:40
+RESUME sobol n512 2026-11-20 19:09:34 boot=2026-11-20 18:51
+sobol reanudado 5s pid=10714 3s pid=10715 chain pid=10712 2026-11-20 19:09:34
+sobol fin rc5=0 rc3=0 2026-11-21 17:37
+reporte rc=0 2026-11-21 17:37
+UHI_V61_SOBOL_N512_DONE 2026-11-21 17:37

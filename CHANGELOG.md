@@ -1,35 +1,34 @@
-# CHANGELOG: UHI (Unified Habitability Index)
+# Changelog
 
-## v5.2.2 (2026-11-19)
-Manuscript files only; no changes to code, data, or results.
+## v6.1 (2026-11-21)
+First public release of the v6 model line. Archived on Zenodo under the same concept DOI as v5.2 ([10.5281/zenodo.24358421](https://doi.org/10.5281/zenodo.24358421)). Released from branch `v6`; branch `main` keeps the frozen v5.2 package.
 
-- Replaced the RNAAS manuscript in `manuscript/` with the length-revised version resubmitted to RNAAS on 2026-11-19 (AAS83819): trimmed to the RNAAS word limit, first person singular, full NASA Exoplanet Archive acknowledgment, Christiansen et al. (2025) cited instead of Akeson et al. (2013), compact AI disclosure.
-- Removed the unused `.bib` file (the note uses an inline bibliography), the old build log and the Markdown copy of the previous text; the previous manuscript remains available in the `v5.2.1` tag.
+**Decision record.** On 2026-11-21 the author approved this release after the Sobol N=512 run finished, with the Hycean branch labelled indicative (not converged). Phase 1 of the v6 plan is closed for the rocky branch, which leads the analysis. Nothing in the model or its outputs was changed for the release; this step only documents and archives.
 
-## v5.2.1 (2026-11-18)
-Manuscript and citation metadata only; no scientific changes to the v5.2-final model, catalog, or results.
+### Model changes relative to v5.2
+- Climate: the synchronous/non-synchronous regime is drawn per realization from a smooth tidal-locking probability and an orbital-period-dependent efficiency, replacing the hard T_eff cut.
+- Atmospheric retention: the atmosphere sub-score now comes from cumulative XUV exposure against a cosmic shoreline (Pass et al. 2025 for fully convective stars, Johnstone et al. 2021 Mors tracks above 0.35 M_sun, Jackson et al. 2012 as an alternative).
+- Composition: every draw is classed as rocky, Hycean or gas-rich using Zeng et al. (2019), Otegi et al. (2020), Venturini et al. (2024) and Madhusudhan et al. (2021). Separate rocky, Hycean and combined lists are produced. Unmeasured masses come from class-specific Otegi relations.
+- `P_top10` counts only surviving draws.
+- A compatibility switch reproduces v5.2 on the full catalogue (maximum difference 9×10⁻¹⁵, which the v5.2 code itself shows when rerun in the same numerical environment).
 
-- Verified all 19 references against the original sources (DOI records) and NASA ADS.
-- Corrected the Kasper et al. (2021) author list, the Kempton et al. (2018) coauthor list, and the Habitable Worlds Catalog (PHL @ UPR Arecibo 2024) citation.
-- Added DOIs to the bibliography where they were missing.
-- Expanded the AI-use disclosure to name Grok (simulations and code, under the author's supervision) and Gemini (reviewer), as required by the AAS guidelines.
-- Clarified that all references were checked against the original sources (DOI records) and NASA ADS.
+### Fixes adopted in v6.1 (after the Phase 1 audit, 2026-11-20)
+- Physical floor on stellar radius, R* ≥ 0.5 R_MS(M*) (white dwarfs exempt). It removes unphysical tails that inflated the number of surviving planets.
+- The class prior now acts in the radius and mass routes as well; with a flat prior the output is bit-identical to v6.0.
+- Innes et al. (2023) critical instellation for M stars at 10 bar set to 0.0860.
+- Sobol report rewritten: degenerate outputs are excluded, the mean S_T gets a bootstrap 95% interval (B = 500), and both full width and half-width are reported. Validated on the Ishigami function. The v6.0 Hycean and combined Sobol bars were invalid for this reason and are not shipped.
+- New flags: `run_uhi_v6.py --outdir` and `--legacy` (switches the fixes off for regression).
 
-## v5.2-final (2026-11-18), frozen release `v5.2-final`
-This is the final version of the model. Licenses: code MIT (copyright Effy Viridis, 2026); data, results and figures CC-BY 4.0. PHL data are not redistributed (downloaded at run time under PHL terms). Archived on Zenodo from the GitHub release `v5.2-final` (`CITATION.cff`).
+### Results
+- Alive (P_alive > 0) at 5σ and 3σ: rocky 255, Hycean 71, combined 287 (v6.0: 495, 242, 530).
+- Sobol N=512 (32 parameters, 17,408 evaluations per threshold): rocky converged (half-width 10/10 at both thresholds, full width 9/10); combined converged on the half-width reading (10/10; full width 7/10 and 8/10); Hycean not converged (half-width 6/10, full width 2/10 and 3/10; 11 of 17 outputs degenerate). Rocky is driven by the shoreline offset and width (S_T 0.22 and 0.12 at 5σ, 0.25 and 0.14 at 3σ), then the mass-route parameter `mv_c`. Hycean is driven by the H2 pressure `lph2_c` (S_T 0.71), then `fcl_c` and `hyc_alb`.
 
-- **Smooth Yang et al. (2013) cloud-albedo blend.** The hard cutoff at S0 = 1000 W m⁻² in v5.1 is replaced by a linear ramp w_eff(S0) = clip((S0 − 800)/200, 0, 1). The model does not extrapolate below the tabulated range. The top 10 is identical and in the same order as v5.1; Spearman v5.1 vs v5.2 (live planets) = 0.999998.
-- **Runaway-greenhouse veto (v5.1, Goldblatt et al. 2013, 282 W m⁻²).** The Teff boundary of the veto is now a separate parameter (`teff_rg`, default 3800 K = `teff_md`).
-- **1-D sensitivity sweep of the veto** (`src/sweep_v52.py`). It passes for F_rg = 275–295 W m⁻² and for T_rg = 3850–3900 K. It fails the "top-10 composition invariant" criterion at T_rg = 3700 and 3750 K, where K2-125 b (Teff 3654 K) drops out of #10 and Ross 128 b enters. At the default T_rg = 3800 K the margin is UHI_rank 0.333 (K2-125 b) vs 0.323 (Ross 128 b); the other 9 members of the top 10 are invariant. Synthetic Venus has P_alive = 0 and Spearman > 0.99 at every primary sweep value. **Accepted as a limitation; T_rg was not retuned.**
-- **ESI erratum.** v1–v5.1 used a total exponent of w/8 instead of w/4, which compressed ESI toward 1. This does not affect the UHI. ESI values in the earlier v4 and v5 documents are inflated.
-- **Sobol coverage.** The post-v5 Sobol run (51 assumptions) does not include F_rg or the w_eff ramp; it was not re-run for v5.1 or v5.2.
-- Automated tables (`src/make_tables.py`), vector figures (`src/make_figures.py`), an AAS MRT table (`src/make_mrt.py`), a master script (`run_uhi_v52.py`) and a Colab notebook.
-- Certified run: Google Colab CPU, catalog md5 f2f70b24e67a9054940267e8081c81e8, 10 000 draws, seed 42. A local re-run is identical to within 1.9e-9.
+### Verification before tagging
+- `tests/test_v61.py`: 21/21 pass. `tests/test_v6.py` (v5.2 compatibility, manual ARM values, anchors): pass. Log: `logs/release_v6.1/tests_release_20261121.log`.
 
-## v5.1 (2026-11-18)
-- Hybrid runaway-greenhouse veto: fHZ = 0 if S·S0/4·(1−A) > 282 W m⁻² (Goldblatt et al. 2013), except for tidally locked M dwarfs (Teff < 3800 K). Synthetic Venus moves from the 98.7th percentile to 0.
+### Deferred
+- Gladman-type tidal-locking time (next phase).
+- English code comments in a separate copy (no logic changes), and a clean-clone reproducibility check.
 
-## v5 (2026-11-18): audit by R-Aetherios
-- Orthogonal S_atm / S_obs, log-sigmoid μ(Rp) with a density override, an M-dwarf climate model (Yang+2013, Kopparapu+2016 k_in, Turbet+2018 CO2 floor), a hurdle ranking (P_alive, conditional median, UHI_rank, P(top10), rank CI), ε = 1e-12, Solar System anchors, and Sobol post-v5 (51 assumptions).
-
-## v4: ELT/PCS reflected-light observability (Kasper et al. 2021). v3: detection probability Φ(SNR − u), cosmic shoreline. v2: Teff-dependent albedo (Shields et al. 2013). v1: first implementation.
+## v5.2.x (2026-11-19)
+Frozen v5.2 package, still available from branch `main` and tags `v5.2-final`, `v5.2.1`, `v5.2.2`. Version DOI cited by the RNAAS note: [10.5281/zenodo.24358996](https://doi.org/10.5281/zenodo.24358996). See the changelog on `main` for its history.

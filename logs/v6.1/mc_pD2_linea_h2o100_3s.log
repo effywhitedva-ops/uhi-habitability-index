@@ -1,0 +1,14 @@
+pD2_linea_h2o100_3s 0 6112 0s
+pD2_linea_h2o100_3s 500 6112 12s
+pD2_linea_h2o100_3s 1000 6112 25s
+pD2_linea_h2o100_3s 1500 6112 37s
+pD2_linea_h2o100_3s 2000 6112 50s
+pD2_linea_h2o100_3s 2500 6112 62s
+pD2_linea_h2o100_3s 3000 6112 74s
+pD2_linea_h2o100_3s 3500 6112 86s
+pD2_linea_h2o100_3s 4000 6112 99s
+pD2_linea_h2o100_3s 4500 6112 111s
+pD2_linea_h2o100_3s 5000 6112 123s
+pD2_linea_h2o100_3s 5500 6112 135s
+pD2_linea_h2o100_3s 6000 6112 147s
+{"tag": "pD2_linea_h2o100_3s", "cfg": {"climate_mode": "rot", "xuv": true, "shore_model": "xuv4", "xuv_star": "mors", "d3": true, "branches": true, "hycean_climate": "innes", "class_prior": [1.0, 1.0, 1.0], "msini": "iso", "mr": "otegi", "rock_line": "h2o100", "rs_floor": true}, "thr": 3.0, "draws": 10000, "seconds": 150, "version": "v6.1-fase1 (2026-11-20)", "rocky": {"scored": 6112, "alive": 256}, "hycean": {"scored": 6112, "alive": 71}, "combined": {"scored": 6112, "alive": 288}, "alive_P001": {"rocky": 134, "hycean": 22, "combined": 152}}

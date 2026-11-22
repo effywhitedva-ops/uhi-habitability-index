@@ -1,0 +1,33 @@
+ARM (Pass+2025 Ec.10-11, valores de catalogo): planeta, manual-diseno, test
+   ('TRAPPIST-1 d', -1.96, np.float64(-1.96))
+   ('TRAPPIST-1 e', -1.36, np.float64(-1.36))
+   ('TRAPPIST-1 f', -0.88, np.float64(-0.88))
+   ('Proxima Cen b', -0.71, np.float64(-0.71))
+   ('Proxima Cen d', -2.02, np.float64(-2.02))
+   ('Ross 128 b', -0.77, np.float64(-0.77))
+   ('GJ 1061 d', -0.47, np.float64(-0.47))
+   ('GJ 273 b', -0.01, np.float64(-0.01))
+   ('Wolf 1061 c', -0.01, np.float64(-0.01))
+   ('GJ 3378 b', -0.1, np.float64(-0.1))
+   ('LHS 1140 b', 0.51, np.float64(0.51))
+   ('TOI-7166 b', -0.16, np.float64(-0.16))
+   ('TOI-4336 A b', -0.3, np.float64(-0.3))
+   ("Teegarden's Star b", -0.9, np.float64(-0.91))
+  max |dif| = 0.01 | Pass Tabla 2: TRAPPIST-1 d -1.86, e -1.29
+                   evid    P_R    P_H    P_G  f_sync  ARM_med  ARM_all  manual_ARM  Pret_R  UHIrank_R  UHIrank_H  UHIrank_C  UHIrank_v52
+TRAPPIST-1 d   densidad  0.970  0.015  0.015   0.996   -1.956   -1.958       -1.96   0.000      0.054      0.000      0.054        0.436
+TRAPPIST-1 e   densidad  0.996  0.002  0.002   0.996   -1.353   -1.353       -1.36   0.001      0.081      0.000      0.081        0.272
+Proxima Cen b     prior  0.939  0.026  0.034   0.991   -0.521   -0.503       -0.71   0.115      0.203      0.000      0.203        0.313
+Proxima Cen d     prior  0.996  0.002  0.002   0.995   -1.816   -1.815       -2.02   0.000      0.073      0.000      0.073        0.389
+Ross 128 b        prior  0.886  0.046  0.069   0.989   -0.767   -0.742       -0.77   0.039      0.163      0.000      0.163        0.323
+K2-125 b          radio  0.044  0.411  0.545   0.768    1.132    1.300         NaN   0.995      0.001      0.000      0.001        0.333
+TOI-4336 A b   densidad  0.000  0.209  0.791   0.968      NaN   -0.304       -0.30     NaN      0.000      0.000      0.000        0.562
+TOI-7166 b        radio  0.021  0.477  0.501   0.985    0.518    0.529       -0.16   0.883      0.001      0.000      0.001        0.547
+LHS 1140 b     densidad  0.542  0.232  0.227   0.956    0.530    0.520        0.51   0.889      0.022      0.002      0.025        0.048
+K2-18 b        densidad  0.105  0.340  0.556   0.819    1.125    0.916         NaN   0.995      0.003      0.000      0.003        0.178
+TOI-700 d         radio  0.957  0.020  0.023   0.702    0.336    0.336         NaN   0.780      0.037      0.000      0.037        0.043
+TOI-700 e         radio  0.990  0.006  0.004   0.839   -0.307   -0.307         NaN   0.240      0.035      0.000      0.035        0.050
+compat bit a bit (v5.2 en memoria vs v6 compat, 763 planetas, 2000 draws): IDENTICO
+compat 5sigma: 6112 planetas, max|dif| catalogo = 9.16e-15, anclas = 2.78e-17, vivos 515  (103 s)
+compat 3sigma: 6112 planetas, max|dif| catalogo = 2.25e-15, anclas = 0, vivos 515  (103 s)
+TODOS LOS TESTS OK

@@ -1,0 +1,14 @@
+madhu_5s 0 6112 0s
+madhu_5s 500 6112 14s
+madhu_5s 1000 6112 27s
+madhu_5s 1500 6112 40s
+madhu_5s 2000 6112 52s
+madhu_5s 2500 6112 65s
+madhu_5s 3000 6112 78s
+madhu_5s 3500 6112 90s
+madhu_5s 4000 6112 103s
+madhu_5s 4500 6112 116s
+madhu_5s 5000 6112 128s
+madhu_5s 5500 6112 140s
+madhu_5s 6000 6112 152s
+{"tag": "madhu_5s", "cfg": {"climate_mode": "rot", "xuv": true, "shore_model": "xuv4", "xuv_star": "mors", "d3": true, "branches": true, "hycean_climate": "madhu", "class_prior": [1.0, 1.0, 1.0], "msini": "iso", "mr": "otegi", "rock_line": "h2o50", "rs_floor": true}, "thr": 5.0, "draws": 10000, "seconds": 157, "version": "v6.1-fase1 (2026-11-20)", "rocky": {"scored": 6112, "alive": 255}, "hycean": {"scored": 6112, "alive": 1021}, "combined": {"scored": 6112, "alive": 1026}, "alive_P001": {"rocky": 130, "hycean": 626, "combined": 638}}

@@ -1,0 +1,42 @@
+{
+ "tag": "main_5s",
+ "cfg": {
+  "climate_mode": "rot",
+  "xuv": true,
+  "shore_model": "xuv4",
+  "xuv_star": "mors",
+  "d3": true,
+  "branches": true,
+  "hycean_climate": "innes",
+  "class_prior": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "msini": "iso",
+  "mr": "otegi",
+  "rock_line": "h2o50",
+  "rs_floor": true
+ },
+ "thr": 5.0,
+ "draws": 10000,
+ "seconds": 157,
+ "version": "v6.1-fase1 (2026-11-20)",
+ "rocky": {
+  "scored": 6112,
+  "alive": 255
+ },
+ "hycean": {
+  "scored": 6112,
+  "alive": 71
+ },
+ "combined": {
+  "scored": 6112,
+  "alive": 287
+ },
+ "alive_P001": {
+  "rocky": 130,
+  "hycean": 22,
+  "combined": 148
+ }
+}
