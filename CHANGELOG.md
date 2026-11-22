@@ -1,5 +1,31 @@
 # Changelog
 
+## v6.1.1 (2026-11-21, documentation release)
+**No numerical change.** The model code is the v6.1 code: once docstrings are removed, every Python module has the same syntax tree as tag `v6.1` (`tools/ast_identity_check.py`). Rerunning the main configuration at 5σ and 3σ (seed 42) reproduces all `results/v6.1` branch and anchor CSVs byte for byte; only the runtime field of the summary JSONs changes.
+
+**Decision record.** On 2026-11-21 the author asked for the README problems found in a clean-clone check to be fixed, together with the English documentation and the top-N analysis.
+
+### Changed
+- Code documentation: English module and function docstrings across `src/`, `src/analysis/` and `run_uhi_v6.py`, giving inputs and outputs with units, the source of each parameter or prior, and the assumptions behind it. The existing Spanish inline comments were translated; only comment text was edited.
+- Scripts: removed two paths that pointed at the development machine (the `run_uhi_v6.py` shebang is now `/usr/bin/env python3`, and the missing-venv message in the three shell scripts now gives the `python3.13 -m venv` command). The shell scripts' remaining lines are unchanged.
+- README:
+  - The convergence statements now give the half-width and full-width readings separately. Rocky meets the half-width criterion (10/10) but not the full-width one (9/10).
+  - The Hycean note now says only that the 11 degenerate outputs cannot be recovered by a larger N.
+  - The reproduce commands write to `repro/` and compare against the shipped files instead of overwriting them.
+  - The `UHI_RES`/`UHI_TAB`/`UHI_FIG` variables of `prior_sensitivity_v6.py` and the `logs/v6.1/` folder are documented. The Python 3.13 prerequisite is stated.
+  - New snippets cover ELT/PCS and 3σ lists.
+  - Legacy scripts are listed as not rerunnable from the release.
+- Legacy audit scripts (`src/make_outputs_v6.py`, `src/analysis/a1`–`a7`) are labelled as such in their docstrings.
+- `CITATION.cff` and `.zenodo.json`: version 6.1.1, with matching wording on convergence. The CITATION `doi` field is the concept DOI until Zenodo assigns the v6.1.1 version DOI.
+- Corrected a text error in the original `sens_v6.py` description: the Sobol sample has 1,214 planets.
+
+### Added
+- `analysis/topN_membership_v61.py` with `--scratch`/`--tables` options, and its tables `tables/v6.1_topN_membership_{targets,counts}.csv` and `tables/v6.1_topN_membership_summary.{json,md}`. The script reruns the released configuration in memory and verifies it against `results/v6.1` before computing per-facility top-N membership.
+- `tools/ast_identity_check.py`.
+
+### Verification
+- `tests/test_v61.py` 21/21 and `tests/test_v6.py` pass. The main MC at 5σ and 3σ is byte-identical to `results/v6.1`. A clean clone of this version, following only the README, reproduces the lists, the Sobol tables and the top-N tables.
+
 ## v6.1 (2026-11-21)
 First public release of the v6 model line. Archived on Zenodo under the same concept DOI as v5.2 ([10.5281/zenodo.24358421](https://doi.org/10.5281/zenodo.24358421)). The v5.2 package remains available from its Git tags and Zenodo versions.
 

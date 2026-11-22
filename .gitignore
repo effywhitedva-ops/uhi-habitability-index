@@ -4,3 +4,7 @@ __pycache__/
 .DS_Store
 ext/
 sens_out_v6_*/Y_raw*.npy
+
+# per-draw scratch of the top-N analysis and local reproduction folders
+analysis/_topN_scratch/
+repro/

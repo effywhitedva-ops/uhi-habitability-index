@@ -1,12 +1,21 @@
-"""Controles sinteticos v5: Tierra, Venus y Marte alrededor de un analogo solar a 10 pc, en geometria
-transitante y no transitante. Magnitudes del Sol a 10 pc: M_J = 3.67, M_Ks = 3.27 (Willmer 2018, ApJS 236, 47).
-Parametros planetarios: valores estandar del Sistema Solar; errores pequenos (SUPUESTO: 1% en R y M)."""
+r"""Synthetic Solar-System controls: Earth, Venus and Mars around a solar analogue at 10 pc.
+
+Each planet is generated in transiting and non-transiting geometry, so six rows are produced.
+Stellar magnitudes at 10 pc are M_J=3.67 and M_Ks=3.27 (Willmer 2018, ApJS 236, 47). Planetary
+period (days), radius (R_E), mass (M_E) and eccentricity are standard Solar-System values. Errors
+of 1% on radius and mass are assumptions, chosen only to give the Monte Carlo a narrow, known input.
+These controls test whether the scoring behaves sensibly; they are not catalogue targets."""
 import numpy as np, pandas as pd, uhi_code as u
 
+# Control planets: (orbital period [d], radius [R_E], mass [M_E], eccentricity).
 PL = {"Earth": (365.256, 1.0, 1.0, 0.0167), "Venus": (224.701, 0.949, 0.815, 0.0068), "Mars": (686.980, 0.532, 0.107, 0.0934)}
 
 
 def synth_rows():
+    r"""Return a pandas DataFrame with Archive-like columns for six synthetic control planets.
+
+    Units match the NASA Exoplanet Archive: days, AU, R_E, M_E, K, solar units, Gyr, pc and magnitudes.
+    The solar Teff is 5772 K, age 4.6 +/-0.1 Gyr, and st_lum=0 means log10(L/L_sun)=0."""
     rows = []
     for geo, tf in [("tr", 1), ("nt", 0)]:
         for nm, (per, rp, mp, e) in PL.items():
@@ -24,6 +33,11 @@ def synth_rows():
 
 
 def run_anchors(catalog_csv, n=10000, seed=42):
+    r"""Run the legacy v5.2 model on the controls and compare them with a catalogue result CSV.
+
+    catalog_csv must contain UHI_rank. Returns UHI summaries plus pct_vs_catalog (percentage of catalogue
+    scores below each control) and pos_if_inserted (rank if inserted). v6.1 run_uhi_v6.py instead calls
+    synth_rows() directly through run_v6."""
     res = u.run(synth_rows(), n_draws=n, seed=seed, joint=False)
     cat = pd.read_csv(catalog_csv)
     sc = cat.UHI_rank.values

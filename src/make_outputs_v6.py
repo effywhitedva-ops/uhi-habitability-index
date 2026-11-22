@@ -1,4 +1,19 @@
-"""Tablas y figuras de UHI v6 Fase 1 a partir de results/ (no recalcula el MC)."""
+r"""LEGACY AUDIT SCRIPT (v6.0-to-v6.1 review). Kept as a record; it is not rerunnable from the release
+as shipped because its input paths or inputs are not included (see README, "Legacy scripts").
+
+Build the Phase-1 tables and figures from saved Monte Carlo results; it does not rerun the model.
+
+Inputs are read from results/ in the repository root: uhi_v6_<branch>_<variant>_<thr>s.csv for main
+and variant runs, summary_<variant>_5s.json, and the v5.2 reference tables in data/. The v6.1
+release stores main/madhu/prior-test CSVs under results/v6.1 and does not ship the teff, bt3d, jackson,
+only_clim, only_xuv, only_d3 and single variant runs. Regenerating these tables therefore requires
+running those variants with --outdir results (5 and 3 sigma as used below); the shipped tables are
+already generated.
+
+Outputs (tables/ and figures/): top-10 lists per branch, v5.2-to-v6 rank shifts with D1/D2/D3
+ablation attribution, Spearman and top-N overlap comparisons, class probabilities by evidence route,
+summary_v6.json, top-10, rank-shift and class-probability figures, and the D2 Pass/Mors continuity
+check. Branch top-10 lists here are pooled across facilities, not split into JWST and ELT lists."""
 import os, sys, json, warnings
 warnings.filterwarnings("ignore")
 import numpy as np, pandas as pd
@@ -6,8 +21,12 @@ from scipy.stats import spearmanr
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 R = lambda f: os.path.join(ROOT, "results", f); T = lambda f: os.path.join(ROOT, "tables", f); F = lambda f: os.path.join(ROOT, "figures", f)
+# Released v5.2 catalogue rankings at 5 and 3 sigma, kept only as comparison baselines.
+# Released v5.2 catalogue rankings at 5 and 3 sigma, kept only as comparison baselines.
 V52 = {5: pd.read_csv(os.path.join(ROOT, "data", "uhi_results_v52.csv")), 3: pd.read_csv(os.path.join(ROOT, "data", "uhi_results_v52_3sigma.csv"))}
 BR = ["rocky", "hycean", "combined"]
+# Well-known targets always included in the class-probability table.
+# Well-known targets always included in the class-probability table.
 ANCH = ["TRAPPIST-1 d", "TRAPPIST-1 e", "Proxima Cen b", "Proxima Cen d", "Ross 128 b", "K2-125 b", "TOI-4336 A b", "TOI-7166 b",
         "LHS 1140 b", "K2-18 b", "TOI-700 d", "TOI-700 e"]
 load = lambda b, v, t: pd.read_csv(R(f"uhi_v6_{b}_{v}_{t}s.csv"))
@@ -17,12 +36,13 @@ out = {}
 
 
 def md_table(d, index=False):
+    r"""Render a DataFrame as a Markdown table, formatting floating values to three decimals."""
     d = d.reset_index() if index else d
     fmt = lambda v: f"{v:.3f}" if isinstance(v, (float, np.floating)) else str(v)
     return "| " + " | ".join(map(str, d.columns)) + " |\n|" + "---|" * len(d.columns) + "\n" + "\n".join("| " + " | ".join(fmt(v) for v in r) + " |" for r in d.values)
 
 
-# ---- T1: top 10 por rama y umbral ----
+# ---- T1: top 10 per branch and threshold ----
 md = ["# UHI v6 Fase 1 - Top 10 por rama (10,000 draws, semilla 42)\n"]
 for t in (5, 3):
     for b in BR:
@@ -32,7 +52,7 @@ for t in (5, 3):
         out[f"top10_{b}_{t}s"] = d[["planet", "UHI_rank", "P_alive", "UHI_cond_med", "P_top10", "P_R", "P_H", "evidence"]].round(3).values.tolist()
 open(T("top10_v6.md"), "w").write("".join(md))
 
-# ---- T2: cambios de rango combinado vs v5.2 (5 sigma), con atribucion por ablacion ----
+# ---- T2: combined rank changes vs v5.2, with attribution by ablation (ablations at 5 sigma only) ----
 abl = {"solo_D1_clima": "only_clim", "solo_D2_XUV": "only_xuv", "solo_D3": "only_d3", "D1+D2+D3_sin_clases": "single"}
 rows = []
 for t in (5, 3):
@@ -50,8 +70,12 @@ for t in (5, 3):
 sh = pd.DataFrame(rows); sh.to_csv(T("rank_shifts_v52_v6.csv"), index=False)
 open(T("rank_shifts_v52_v6.md"), "w").write(md_table(sh))
 
-# ---- T3: Spearman y solapamientos ----
+# ---- T3: Spearman correlations and top-N overlaps ----
 def comp(a, b, col="UHI_rank"):
+    r"""Compare two ranked result tables on a shared score column.
+
+    Returns Spearman rho for all planets and for planets alive in either run, the number in that union,
+    and top-10/top-20 name overlaps. Inputs must contain planet and the score column (default UHI_rank)."""
     m = a[["planet", col]].merge(b[["planet", col]], on="planet")
     alive = (m[col + "_x"] > 0) | (m[col + "_y"] > 0)
     return dict(spearman_all=spearmanr(m[col + "_x"], m[col + "_y"]).statistic,
@@ -72,7 +96,7 @@ for v in ["teff", "bt3d", "jackson", "madhu", "only_clim", "only_xuv", "only_d3"
 sp.append(dict(comp="variante madhu vs main (hycean)", thr=3, **comp(load("hycean", "madhu", 3), load("hycean", "main", 3))))
 sp = pd.DataFrame(sp); sp.to_csv(T("spearman_v6.csv"), index=False); open(T("spearman_v6.md"), "w").write(md_table(sp))
 
-# ---- T4: probabilidades de clase con columna de evidencia ----
+# ---- T4: class probabilities with an evidence column ----
 c5 = load("combined", "main", 5).set_index("planet"); r5 = load("rocky", "main", 5).set_index("planet"); h5 = load("hycean", "main", 5).set_index("planet")
 hm = load("hycean", "madhu", 5).set_index("planet")
 pl = list(dict.fromkeys(ANCH + list(r5.index[:10]) + list(h5.index[:10]) + list(hm.index[:10]) + list(V52[5].planet.head(10))))
@@ -83,7 +107,7 @@ cp = pd.DataFrame({"evidencia": c5.loc[pl, "evidence"], "P_R": c5.loc[pl, "P_R"]
 cp.to_csv(T("class_probabilities_v6.csv")); open(T("class_probabilities_v6.md"), "w").write(md_table(cp, index=True))
 ev = c5.groupby("evidence")[["P_R", "P_H", "P_G"]].agg(["mean", "count"]); ev.to_csv(T("class_by_evidence_v6.csv"))
 
-# ---- resumen ----
+# ---- summary ----
 summ = {}
 for t in (5, 3):
     for b in BR:
@@ -95,8 +119,11 @@ summ["global_class_mean"] = c5[["P_R", "P_H", "P_G"]].mean().round(4).to_dict()
 summ["class_by_evidence_counts"] = c5.evidence.value_counts().to_dict()
 json.dump(dict(summary=summ, tops=out), open(T("summary_v6.json"), "w"), indent=1, default=float)
 
-# ---- figuras ----
+# ---- figures ----
 def topfig(t):
+    r"""Draw the three-branch top-10 bar figure for threshold t (5 or 3 sigma).
+
+    Bars are UHI_rank coloured by the class-evidence route; labels show P_R, P_H and P_top10."""
     fig, ax = plt.subplots(1, 3, figsize=(16, 5.2))
     for k, b in enumerate(BR):
         d = load(b, "main", t).head(10)[::-1]
@@ -146,7 +173,7 @@ for yy, e in zip(y, cpl.evidencia):
 ax.set_xlim(0, 1); ax.set_xlabel("probabilidad de clase (priors iguales, D4)"); ax.legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=3, fontsize=8)
 fig.tight_layout(); fig.savefig(F("fig_v6_class_probabilities.png"), dpi=150); plt.close(fig)
 
-# validacion D2: fluencia Pass (FC) vs Mors en la mezcla de 0.35 Msun
+# D2 validation: Pass (fully convective) vs Mors fluence across the 0.35 M_sun blend
 sys.path.insert(0, os.path.join(ROOT, "src")); import xuv_history as X
 g = X.mors_grid(); ms = np.linspace(0.1, 0.6, 51); fc = []; mo = {p: [] for p in (5, 50, 95)}
 for m in ms:

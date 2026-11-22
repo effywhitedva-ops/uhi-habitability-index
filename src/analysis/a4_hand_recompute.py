@@ -1,6 +1,17 @@
-"""Recalculo a mano INDEPENDIENTE (no importa uhi_code / uhi_code_v6 / xuv_history / composition) de GJ 273 b, Proxima Cen b
-y TRAPPIST-1 d. Constantes y formulas tecleadas desde las fuentes (Pass+2025 Ec. 6-11 y Tabla 1; Kepler III; Zeng+2019; Otegi+2020).
-Valor nominal + MC propio (semilla 7, 200k draws) para las medianas."""
+r"""LEGACY AUDIT SCRIPT (v6.0-to-v6.1 review). Kept as a record; it is not rerunnable from the release
+as shipped because its input paths or inputs are not included (see README, "Legacy scripts").
+
+Independent hand recomputation of GJ 273 b, Proxima Cen b and TRAPPIST-1 d.
+
+It deliberately does not import uhi_code, uhi_code_v6, xuv_history or composition. Constants and formulas
+were retyped from the sources: Kepler's third law; Pass et al. (2025) Eqs. 6-11 and Table 1; Zeng et al.
+(2019) tables; Otegi et al. (2020); and the Innes et al. (2023) Hycean limit. Its own Monte Carlo uses
+seed 7 and 200,000 draws, so agreement with the pipeline is statistical, not bit-for-bit.
+
+Run from the repository root. Reads data/ and results/uhi_v6_{rocky,hycean}_main_5s.csv (the v6.0-era
+location; the v6.1 release stores main CSVs in results/v6.1). The hard-coded Innes M-star 10-bar value
+0.0852 is the v6.0 preprint value; v6.1 uses the published 0.0860 (v6.1 fix 1), so P_clima_H here is
+a v6.0 cross-check. Writes results/analysis_phase1/hand_recompute_{vs_pipeline.csv,values.json}."""
 import numpy as np, pandas as pd, json
 from scipy.stats import norm
 from scipy.interpolate import RegularGridInterpolator
@@ -10,13 +21,18 @@ rng = np.random.default_rng(7); N = 200_000
 cat = pd.read_csv("data/pscomppars_2026-11-18.csv").set_index("pl_name")
 sig = lambda x: 1 / (1 + np.exp(-x))
 def sn(v, e1, e2, frac, lo=None, hi=None, n=N):
+    r"""Draw a split normal using catalogue +/- errors (fractional fallback frac), mirroring the pipeline rule."""
     su = abs(e1) if np.isfinite(e1) and e1 != 0 else abs(v) * frac; sd = abs(e2) if np.isfinite(e2) and e2 != 0 else abs(v) * frac
     z = rng.standard_normal(n); x = np.where(z >= 0, v + z * su, v + z * sd); return np.clip(x, lo if lo is not None else -np.inf, hi if hi is not None else np.inf)
-# Pass+2025 Tabla 1 (f_L) y Ec. 7 (t_sat)
+# Pass+2025 Table 1 (f_L) and Eq. 7 (t_sat)
 PM = [0.10, 0.12, 0.15, 0.20, 0.25, 0.30]; PFL = [1.19, 1.17, 1.13, 1.13, 1.16, 1.22]
 g = np.load("data/mors_grid.npz")
 ip = {k: RegularGridInterpolator((g["masses"], g["pcts"], np.log(g["ages"])), np.log(np.maximum(g[k], 1e-300)), bounds_error=False, fill_value=None) for k in ("CLx", "Lbol")}
 def mors_I(L, a_au, age, m, pct):
+    r"""Return lifetime X-ray fluence relative to Earth (2.0e18 erg cm^-2) from the Mors grid.
+
+    L in L_sun, a_au in AU, age in Gyr, m in M_sun, pct rotation percentile. Interpolation is in log
+    quantity versus log age, with clipping to the grid; bolometric rescaling matches the pipeline assumption."""
     pts = np.c_[np.clip(m, .1, 1.2), np.clip(pct, 5, 95), np.log(np.clip(age, g["ages"][0], g["ages"][-1]))]
     E = np.exp(ip["CLx"](pts)) * L * LSUN / np.exp(ip["Lbol"](pts))
     return E / (4 * np.pi * (a_au * AU * 100) ** 2) / I_E
@@ -28,25 +44,25 @@ rhmax = lambda m: 2.3 + 0.3 * np.log2(np.maximum(m, 1e-3) / 5.0)
 out = {}
 for p in ["GJ 273 b", "Proxima Cen b", "TRAPPIST-1 d"]:
     r = cat.loc[p]; o = {}
-    # --- nominal ---
+    # --- nominal values ---
     L0 = r.st_rad ** 2 * (r.st_teff / 5772) ** 4
     a0 = (G * r.st_mass * MSUN * (r.pl_orbper * DAY) ** 2 / (4 * np.pi ** 2)) ** (1 / 3) / AU
     o["L_nom"] = L0; o["a_nom_AU"] = a0; o["S_nom"] = L0 / a0 ** 2
     o["Teq_A0_nom"] = 278.6 * o["S_nom"] ** 0.25
-    # --- MC propio ---
+    # --- independent Monte Carlo ---
     teff = sn(r.st_teff, r.st_tefferr1, r.st_tefferr2, .02, 2300, 50000); rs = sn(r.st_rad, r.st_raderr1, r.st_raderr2, .07, .05)
     ms = sn(r.st_mass, r.st_masserr1, r.st_masserr2, .07, .05); L = rs ** 2 * (teff / 5772) ** 4
     age = sn(r.st_age, r.st_ageerr1, r.st_ageerr2, .3, .01, 13.8) if np.isfinite(r.st_age) else rng.uniform(1, 10, N)
     Porb = sn(r.pl_orbper, r.pl_orbpererr1, r.pl_orbpererr2, 1e-4, 1e-3)
     a = (G * ms * MSUN * (Porb * DAY) ** 2 / (4 * np.pi ** 2)) ** (1 / 3) / AU; S = L / a ** 2
     o["S_MCmed"] = float(np.median(S))
-    # --- D1 p_sync: E sobre M_lock~U(.55,.65), a_lock~U(.15,.25) ---
+    # --- D1 p_sync: expectation over M_lock~U(.55,.65), a_lock~U(.15,.25) ---
     mlk = rng.uniform(.55, .65, N); alk = rng.uniform(.15, .25, N)
     ps = sig((mlk - ms) / .05) * sig((alk - a) / .03); o["p_sync"] = float(ps.mean())
     o["p_sync_nominal_analytic"] = float(np.mean(sig((np.linspace(.55, .65, 401)[:, None] - r.st_mass) / .05) * sig((np.linspace(.15, .25, 401)[None, :] - a0) / .03)))
     plo = rng.uniform(4, 6, N); phi = rng.uniform(15, 25, N); e3 = np.clip((Porb - plo) / (phi - plo), 0, 1)
     o["e3D_med"] = float(np.median(e3)); o["k_in_med"] = float(np.median(2 * (1 - .25 * (1 - e3))))
-    # --- D2: Pass+2025 FC ---
+    # --- D2: Pass+2025 fully convective branch ---
     lrs = -3.05 + .06 * rng.standard_normal(N); ts = np.maximum((5.9 - 15.4 * np.maximum(ms, .1)) * np.exp(.3 * rng.standard_normal(N)), .01)
     ff = rng.uniform(1, 1.5, N); fl = np.interp(ms, PM, PFL); Lc = L * LSUN; Rs = 10 ** lrs
     satnow = r.hostname == "TRAPPIST-1"
@@ -58,11 +74,11 @@ for p in ["GJ 273 b", "Proxima Cen b", "TRAPPIST-1 d"]:
     I = np.exp((1 - w) * np.log(Ifc) + w * np.log(Im))
     o["I_rel_Pass_only_med"] = float(np.median(Ifc)); o["blend_w_med"] = float(np.median(w)); o["I_rel_med"] = float(np.median(I))
     o["I_rel_p16"], o["I_rel_p84"] = [float(x) for x in np.percentile(I, [16, 84])]
-    # nominal analitico Pass (f_flare 1.25, R_sat 10^-3.05, t_sat nominal, edad nominal o 5.5 Gyr)
+    # analytic nominal Pass value (f_flare 1.25, R_sat 10^-3.05, nominal t_sat, nominal age or 5.5 Gyr)
     agen = r.st_age if np.isfinite(r.st_age) else 5.5; tsn = 5.9 - 15.4 * max(r.st_mass, .1)
     En = 1.25 * 10 ** -3.05 * np.interp(r.st_mass, PM, PFL) * L0 * LSUN * GYR * (agen if satnow else min(tsn, agen))
     o["I_rel_Pass_nominal"] = float(En / (4 * np.pi * (a0 * AU * 100) ** 2) / I_E); o["t_sat_nominal_Gyr"] = tsn
-    # --- masa/radio y clase ---
+    # --- mass/radius and class ---
     if r.pl_bmassprov == "Msini" and r.tran_flag == 0:
         msini = sn(r.pl_bmasse, r.pl_bmasseerr1, r.pl_bmasseerr2, .2, .01); ci = rng.uniform(0, 1, N)
         M = np.minimum(msini / np.sqrt(np.clip(1 - ci ** 2, 1e-4, 1)), 26600)
@@ -75,7 +91,7 @@ for p in ["GJ 273 b", "Proxima Cen b", "TRAPPIST-1 d"]:
         RpR = rR; MpR = M
     else:
         M = sn(r.pl_bmasse, r.pl_bmasseerr1, r.pl_bmasseerr2, .2, .01); R = sn(r.pl_rade, r.pl_radeerr1, r.pl_radeerr2, .1, .1)
-        rw, rsil, rh = rz(W50, M), rz(SIL, M), rhmax(M)      # T_eq < 300 K -> tabla 300 K
+        rw, rsil, rh = rz(W50, M), rz(SIL, M), rhmax(M)      # T_eq < 300 K -> 300 K table
         cR, cH, cG = R <= rw, (R > rsil) & (R <= rh), R > rsil
         tot = cR.astype(float) + cH + cG; u = rng.uniform(size=N) * np.where(tot > 0, tot, 1)
         wR = np.where(tot > 0, cR, 1.0)
@@ -86,7 +102,7 @@ for p in ["GJ 273 b", "Proxima Cen b", "TRAPPIST-1 d"]:
         RpR, MpR = R, M
     vesc = VE * np.sqrt(MpR / RpR); ARM = 4 * np.log10(vesc) - np.log10(I) - 3.16
     o["vesc_med"] = float(np.median(vesc)); o["ARM_med"] = float(np.median(ARM)); o["P_ret_med"] = float(np.median(norm.cdf(ARM * np.log(10))))
-    # Hycean clima (Innes): P(S <= f_cl * S_crit(P_H2, Teff)), log10 P ~ U(0,2), f_cl ~ U(1,2)
+    # Hycean climate (Innes): P(S <= f_cl * S_crit(P_H2, Teff)), log10 P ~ U(0,2), f_cl ~ U(1,2)
     s1 = np.interp(teff, [3457, 5772], [.320, .389]); s10 = np.interp(teff, [3457, 5772], [.0852, .0676]); lp = rng.uniform(0, 2, N)
     sc = 10 ** (np.log10(s1) + (np.log10(s10) - np.log10(s1)) * lp); o["P_clima_H_innes"] = float((S <= rng.uniform(1, 2, N) * sc).mean())
     out[p] = o

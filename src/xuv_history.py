@@ -1,38 +1,55 @@
-"""UHI v6 - historia XUV y retencion atmosferica (Fase 1, parte A).
+r"""Stellar X-ray/EUV history, cumulative exposure, and atmosphere-retention helpers.
 
-Fuentes (ver Obsidian Referencias/Fase_1.md):
-  * Pass, Charbonneau & Vanderburg 2025, ApJL 986, L3 (doi:10.3847/2041-8213/adda39): Ec. 6-11, Tabla 1.
-      I_XUV = f_flare * 10^-3.05 * f_L * L_bol * t_sat / (4 pi a^2);  t_sat = 5.9 - 15.4 M*/Msun [Gyr] (0.1-0.3 Msun)
-      I_XUV,Earth = 2.0e18 erg cm^-2 (integral de Lammer+2009 Ec.2 de 0 a 4.6 Gyr);  ARM = 4 log v_esc - log I_XUV - 3.16
-  * Johnstone, Bartel & Gudel 2021, A&A 649, A96 (codigo Mors; pistas Spada+2013) para M* > 0.35 Msun.
-  * Jackson, Davis & Wheatley 2012, MNRAS 422, 2024, Tabla 2 (variante/fallback con (B-V)_0 del catalogo).
-  * Sanz-Forcada+2011, A&A 532, A6: log L_EUV = 4.80 + 0.860 log L_X (cgs).
-  * Owen & Wu 2017, ApJ 847, 29, Ec. 19 y 31: Mdot = eta pi R^3 F_XUV / (G M), eta = 0.1 (v_esc / 15 km/s)^-2.
-  * Berta-Thompson+2026, ApJ 1011, 123: costa 3D (variante; ver p_ret_bt3d).
-Lo marcado SUPUESTO no tiene fuente directa (documentado en assumptions_v6.md).
-"""
+The main outputs are lifetime fluence in erg cm^-2, present luminosities in erg s^-1,
+and dimensionless retention probabilities. Stellar luminosity enters in solar units,
+orbital distance in AU, ages in Gyr, planetary radii/masses in Earth units, and escape
+speeds in km s^-1. Formulas are intentionally compact proxies for population-level
+prioritization; they are not a hydrodynamic atmosphere-evolution code.
+
+Primary sources:
+Pass, Charbonneau & Vanderburg (2025, ApJL 986, L3; doi:10.3847/2041-8213/adda39),
+equations 6-11 and Table 1, define the fully convective saturation fluence, Earth's
+reference XUV fluence (2.0e18 erg cm^-2) and atmospheric-retention metric (ARM).
+Johnstone, Bartel & Gudel (2021, A&A 649, A96) provides Mors X-ray/EUV tracks
+with Spada et al. (2013) stellar evolution for heavier stars. Jackson, Davis & Wheatley
+(2012, MNRAS 422, 2024), Table 2, is an alternative age-activity relation. Sanz-Forcada
+et al. (2011, A&A 532, A6) converts L_X to L_EUV. Owen & Wu (2017, ApJ 847, 29)
+supplies the energy-limited efficiency scaling used for Hycean envelopes. Innes, Tsai &
+Pierrehumbert (2023, ApJ 953, 168), Table 1, provides runaway limits for H2-He atmospheres.
+Berta-Thompson et al. (2026, ApJ 1011, 123) motivates the optional bolometric shoreline.
+
+All extrapolations and normalizations not stated by those papers are labelled as assumptions
+here and in docs/assumptions_v6_es.md, sections D2, D4 and "fallback checks"."""
 import os
 import numpy as np
 from scipy.special import ndtr as PHI
 
+# Constants are cgs unless named otherwise. GYR_S converts Gyr to seconds.
 LSUN_CGS = 3.828e33; AU_CM = 1.495978707e13; GYR_S = 3.15576e16
 I_XUV_EARTH = 2.0e18                    # erg cm^-2 (Pass+2025)
 LOG_RSAT_FC = -3.05                     # Wright+2018 via Pass+2025 (+0.05/-0.06)
-PASS_M = np.array([0.10, 0.12, 0.15, 0.20, 0.25, 0.30])     # Pass+2025 Tabla 1
+PASS_M = np.array([0.10, 0.12, 0.15, 0.20, 0.25, 0.30])     # Pass+2025 Table 1
 PASS_FL = np.array([1.19, 1.17, 1.13, 1.13, 1.16, 1.22])
-STILL_SATURATED = {"TRAPPIST-1"}       # Pass+2025 Sec. 2.2: TRAPPIST-1 sigue saturada hoy (Prot 3.3 d) -> se integra hasta la edad
-# Jackson+2012 Tabla 2: (B-V)0 lo, hi, log(Lx/Lbol)sat, log tau_sat [yr], alpha
+STILL_SATURATED = {"TRAPPIST-1"}       # Pass+2025 Sec. 2.2: TRAPPIST-1 is still saturated today (P_rot 3.3 d) -> integrate up to its present age
+# Jackson+2012 Table 2: (B-V)0 lo, hi, log(Lx/Lbol)_sat, log tau_sat [yr], alpha
+# Each Jackson et al. (2012) row: B-V lower/upper colour edge, saturated log10(L_X/L_bol), log10 saturation time
+# in years, and post-saturation power-law index.
 JACKSON = np.array([[0.290, 0.450, -4.28, 7.87, 1.22], [0.450, 0.565, -4.24, 8.35, 1.24], [0.565, 0.675, -3.67, 7.84, 1.13],
                     [0.675, 0.790, -3.71, 8.03, 1.28], [0.790, 0.935, -3.36, 7.90, 1.40], [0.935, 1.275, -3.35, 8.28, 1.09],
                     [1.275, 1.410, -3.14, 8.21, 1.18]])
-# Innes, Tsai & Pierrehumbert 2023, ApJ 953, 168, Tabla 1: limite de desbocado [S0] para 1 y 10 bar de H2-He
-INNES_TEFF = np.array([3457.0, 5772.0])          # estrella M = luminosidad de K2-18 (Teff de K2-18 del catalogo); G = Sol
-INNES_S1 = np.array([0.320, 0.389]); INNES_S10 = np.array([0.0860, 0.0676])   # v6.1: M 10 bar = 0.0860 (Tabla 1 publicada; v6.0 usaba 0.0852 del preprint)
+# Innes, Tsai & Pierrehumbert 2023, ApJ 953, 168, Table 1: runaway limit [S0] for 1 and 10 bar of H2-He
+INNES_TEFF = np.array([3457.0, 5772.0])          # M star = K2-18 luminosity case (K2-18 Teff taken from the catalogue); G = Sun
+INNES_S1 = np.array([0.320, 0.389]); INNES_S10 = np.array([0.0860, 0.0676])   # v6.1: M-star 10 bar = 0.0860 (published Table 1; v6.0 used the preprint value 0.0852)
 
 _GRID = None
 
 
 def mors_grid():
+    r"""Load and cache data/mors_grid.npz, returning an empty dictionary if absent.
+
+    The grid contains masses (M_sun), rotation percentiles, ages (Gyr), bolometric/X-ray/EUV
+    luminosities (erg s^-1) and cumulative X-ray energy (erg). It is a precomputed product of
+    build_mors_grid.py; an empty result deliberately triggers the documented Jackson fallback."""
     global _GRID
     if _GRID is None:
         p = os.path.join(os.path.dirname(__file__), "..", "data", "mors_grid.npz")
@@ -41,18 +58,32 @@ def mors_grid():
 
 
 def fl_pass(mstar):
-    return np.interp(mstar, PASS_M, PASS_FL)   # extrapolacion constante fuera de 0.10-0.30 (SUPUESTO)
+    r"""Return the dimensionless pre-main-sequence luminosity factor f_L.
+
+    mstar is in solar masses. Values are interpolated from Pass et al. (2025) Table 1 between
+    0.10 and 0.30 M_sun and held constant outside that interval (assumption, D2)."""
+    return np.interp(mstar, PASS_M, PASS_FL)   # held constant outside 0.10-0.30 M_sun (ASSUMPTION)
 
 
 def tsat_pass(mstar, scale=1.0):
-    """Pass+2025 Ec. 7 (ajuste 0.1-0.3 Msun; Pass la extrapolan a 0.35). M<0.1 se fija en 0.1 (SUPUESTO). Piso 0.01 Gyr."""
+    r"""Return the X-ray saturation duration in Gyr for fully convective stars.
+
+    mstar is solar mass and scale is an optional dimensionless uncertainty factor. Pass et al.
+    (2025) equation 7 is calibrated over 0.1-0.3 M_sun and extrapolated by them to 0.35;
+    the 0.1-M_sun lower clamp and 0.01-Gyr minimum are numerical safeguards (assumption)."""
     return np.maximum((5.9 - 15.4 * np.maximum(mstar, 0.10)) * scale, 0.01)
 
 
 def fluence_fc(L, a_au, age, mstar, log_rsat, tsat, f_flare, saturated_now=False, post_drop=1e-2):
-    """Fluencia en rayos X (banda ROSAT, proxy XUV) [erg cm^-2] para M completamente convectivas (Pass+2025 Ec. 10).
-    post_drop: L_X/L_bol tras t_sat = post_drop * R_sat (SUPUESTO conservador; Pass: caida > 2 dex, fluencia despreciable).
-    Devuelve (fluencia, L_X hoy [erg/s])."""
+    r"""Return lifetime X-ray fluence and current X-ray luminosity for an M dwarf.
+
+    L is solar luminosity, a_au AU, age/tsat Gyr, mstar solar mass, log_rsat log10(L_X/L_bol)
+    during saturation, f_flare a dimensionless multiplier and post_drop a fraction of that
+    saturated ratio after saturation ends. Return (fluence in erg cm^-2, L_X in erg s^-1).
+
+    This implements the Pass et al. (2025) equation-10 saturated fluence. The low post-saturation
+    emission is an assumption added for conservative continuity; Pass et al. treat the later
+    fluence as small. Stars in STILL_SATURATED integrate saturated output until their present age."""
     Lc = L * LSUN_CGS; rs = 10 ** log_rsat; fl = fl_pass(mstar)
     t_on = np.where(saturated_now, age, np.minimum(tsat, age))
     E = f_flare * rs * fl * Lc * t_on * GYR_S + np.where(saturated_now, 0.0, post_drop * rs * Lc * np.maximum(age - tsat, 0.0) * GYR_S)
@@ -61,9 +92,14 @@ def fluence_fc(L, a_au, age, mstar, log_rsat, tsat, f_flare, saturated_now=False
 
 
 def fluence_mors(L, a_au, age, mstar, pct):
-    """Johnstone+2021 (Mors): interpolacion bilineal en (masa, percentil) de la integral acumulada de L_X.
-    Se reescala por L_obs / L_bol,pista(edad) para respetar la luminosidad observada (SUPUESTO). Masa fuera de 0.10-1.20 -> extremo (Mors falla a 1.25 Msun: edad 5 Gyr fuera de la pista).
-    Devuelve (fluencia [erg cm^-2], L_X hoy, L_EUV hoy) o None si no hay malla."""
+    r"""Interpolate Mors cumulative X-ray energy and current X-ray/EUV luminosity.
+
+    L is observed bolometric luminosity (L_sun), a_au AU, age Gyr, mstar M_sun, and pct the
+    rotation percentile. Return (fluence erg cm^-2, L_X erg s^-1, L_EUV erg s^-1), or None
+    when the grid is missing. Values are trilinearly interpolated in mass, percentile and age,
+    clipped to the grid boundaries, then rescaled by observed/track bolometric luminosity.
+    That rescaling and the boundary clipping are assumptions (D2), chosen so catalogue
+    luminosity is respected without extrapolating outside the tracks."""
     g = mors_grid()
     if not g:
         return None
@@ -74,6 +110,10 @@ def fluence_mors(L, a_au, age, mstar, pct):
     k = np.clip(np.searchsorted(A, t) - 1, 0, len(A) - 2); wt = (t - A[k]) / (A[k + 1] - A[k])
 
     def interp(Q):
+        r"""Return one Mors grid quantity interpolated at the current draw coordinates.
+
+        Q has axes (mass, percentile, age); the enclosing function provides the bracketing indices
+        and fractional weights. Output units are those of the selected grid quantity."""
         out = 0.0
         for di, fm in ((0, 1 - wm), (1, wm)):
             for dj, fp in ((0, 1 - wp), (1, wp)):
@@ -85,8 +125,12 @@ def fluence_mors(L, a_au, age, mstar, pct):
 
 
 def fluence_jackson(L, a_au, age, bv, u_scatter=None):
-    """Jackson+2012 Tabla 2 por (B-V)_0 del catalogo (enrojecimiento ignorado: SUPUESTO). Ley partida:
-    L_X/L_bol = R_sat (t < tau), R_sat (t/tau)^-alpha (t > tau). bv fuera de [0.29, 1.41] -> NaN (usar otro modelo)."""
+    r"""Return lifetime X-ray fluence and current X-ray luminosity from Jackson et al. (2012).
+
+    L is solar luminosity, a_au AU, age Gyr, and bv intrinsic B-V colour. Table 2 gives
+    saturation level, saturation time and power-law decline by colour bin. Return
+    (erg cm^-2, erg s^-1). Out-of-table colours return NaN so the caller retains the previous
+    model. Extinction/reddening is neglected (assumption), and u_scatter is currently unused."""
     bv = np.asarray(bv, float)
     idx = np.searchsorted(JACKSON[:, 1], bv, side="right"); ok = (bv >= 0.29) & (bv < 1.41)
     row = JACKSON[np.clip(idx, 0, 6)]
@@ -103,8 +147,11 @@ _EEM = None
 
 
 def bv_from_teff(teff):
-    """(B-V)_0 de enana de la tabla de Pecaut & Mamajek 2013 (version 2022.04.16, md5 afa3e0c8b249e8b9511b917c03aceb84),
-    interpolada en Teff. Se usa solo en la variante Jackson porque el snapshot no trae B ni V. SUPUESTO: estrella de secuencia principal."""
+    r"""Estimate intrinsic dwarf B-V colour from effective temperature in K.
+
+    The table is E. Mamajek's mean dwarf colour/temperature sequence (Pecaut & Mamajek 2013;
+    version 2022.04.16, md5 recorded in docs/assumptions_v6_es.md). It is used only by the Jackson
+    variant because the catalogue snapshot lacks B and V. Main-sequence colour is assumed."""
     global _EEM
     if _EEM is None:
         rows = []
@@ -125,38 +172,61 @@ def bv_from_teff(teff):
 
 
 def leuv_from_lx(Lx):
+    r"""Return L_EUV in erg s^-1 from L_X in erg s^-1 using Sanz-Forcada et al. (2011).
+
+    The empirical cgs relation log L_EUV = 4.80 + 0.860 log L_X is clamped at L_X >= 1 erg s^-1
+    only to avoid a logarithm of zero."""
     return 10 ** (4.80 + 0.860 * np.log10(np.maximum(Lx, 1.0)))   # Sanz-Forcada+2011
 
 
 def arm(vesc_kms, I_rel):
-    return 4 * np.log10(vesc_kms) - np.log10(np.maximum(I_rel, 1e-30)) - 3.16   # Pass+2025 Ec. 11
+    r"""Return the Pass et al. (2025) atmospheric-retention metric ARM, dimensionless.
+
+    vesc_kms is planetary escape speed in km s^-1; I_rel is lifetime XUV fluence relative to
+    Earth's 2.0e18 erg cm^-2. ARM is 4 log10(v_esc) - log10(I_rel) - 3.16. A tiny floor protects
+    the logarithm; ARM itself is not a probability."""
+    return 4 * np.log10(vesc_kms) - np.log10(np.maximum(I_rel, 1e-30)) - 3.16   # Pass+2025 Eq. 11
 
 
 def p_ret_xuv(vesc_kms, I_rel, shore_logc=0.0, shore_sig=1.0):
-    """P_ret = Phi((ARM + c) ln10 / sigma_ln). c y sigma_ln con los mismos valores base que v5.2 (0 y 1.0). SUPUESTO."""
+    r"""Map ARM to a dimensionless probability of retaining an atmosphere.
+
+    shore_logc shifts the cosmic shoreline in dex; shore_sig is the natural-log width.
+    The normal CDF form and the 0/1.0 central values inherited from v5.2 are assumptions.
+    Sobol analysis shows these two parameters dominate the rocky v6.1 ranking variance."""
     return PHI((arm(vesc_kms, I_rel) + shore_logc) * np.log(10.0) / shore_sig)
 
 
 def p_ret_bt3d(vesc_kms, S_rel, L_rel, shore_sig=1.0, p=5.9, q=1.17, logL_hz=-2.23):
-    """Variante Berta-Thompson+2026 (costa 3D bolometrica): log S_crit = p log v_esc + q log L* + const.
-    NO VERIFICADO: la constante de normalizacion no se extrajo del paper; aqui se fija para que la Tierra en la HZ
-    (S=1) quede sobre la costa con L* = 10^logL_hz y v_esc = 11.186 km/s, que es como el resumen describe el
-    limite (~M4V). Solo se usa como variante de sensibilidad."""
+    r"""Return the optional bolometric-shoreline retention probability.
+
+    vesc_kms is km s^-1, S_rel is Earth-normalized bolometric instellation, and L_rel is
+    solar luminosity. p and q are the slopes adopted for log S_crit; the normalization places
+    an Earth-like HZ planet at the reference late-M luminosity. This variant is used only for
+    sensitivity testing and is not the production shoreline model."""
     const = np.log10(1.0) - p * np.log10(11.186) - q * logL_hz
     log_scrit = p * np.log10(vesc_kms) + q * np.log10(L_rel) + const
     return PHI((log_scrit - np.log10(np.maximum(S_rel, 1e-30))) * np.log(10.0) / shore_sig)
 
 
 def s_crit_innes(teff, p_h2_bar):
-    """Limite de desbocado Hycean [S0]: log S lineal en log P entre las anclas de 1 y 10 bar (Innes+2023 Tabla 1),
-    interpolado linealmente en Teff entre la estrella M (3457 K) y G (5772 K), constante fuera (SUPUESTO).
-    Fuera de 1-10 bar se extrapola con la misma pendiente (Innes: OLR_max ~ 1/masa seca; SUPUESTO)."""
+    r"""Return the Hycean runaway instellation limit S_crit in Earth units.
+
+    teff is K; p_h2_bar is H2-He envelope pressure in bar. Innes et al. (2023) Table 1
+    supplies 1- and 10-bar limits for an M-star case and the Sun. log S is linearly
+    interpolated in log pressure and in Teff, then held constant outside the anchors; pressure
+    extrapolation beyond 1-10 bar is an explicit assumption."""
     s1 = np.interp(teff, INNES_TEFF, INNES_S1); s10 = np.interp(teff, INNES_TEFF, INNES_S10)
     return 10 ** (np.log10(s1) + (np.log10(s10) - np.log10(s1)) * np.log10(p_h2_bar))
 
 
 def envelope_t_loss_gyr(rp_re, mp_me, p_h2_bar, fxuv_cgs, eta_fac=1.0):
-    """t_loss = M_env / Mdot [Gyr]. M_env = 4 pi R^2 P / g (envoltura fina hidrostatica); Owen & Wu 2017 Ec. 19/31."""
+    r"""Return the energy-limited time to remove a thin H2 envelope, in Gyr.
+
+    rp_re/mp_me are Earth radius/mass; p_h2_bar bar; fxuv_cgs present X+EUV flux in erg cm^-2
+    s^-1; eta_fac is a dimensionless sensitivity multiplier. Envelope mass is 4 pi R^2 P/g.
+    Mass loss uses Owen & Wu (2017) energy-limited scaling with eta = 0.1 (v_esc / 15 km s^-1)^-2.
+    The result is a present-day stability timescale, not a full time-integrated envelope history."""
     G = 6.674e-11; R = rp_re * 6.371e6; M = mp_me * 5.9722e24
     g = G * M / R ** 2; menv = 4 * np.pi * R ** 2 * p_h2_bar * 1e5 / g
     vesc = np.sqrt(2 * G * M / R) / 1e3

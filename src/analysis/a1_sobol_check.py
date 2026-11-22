@@ -1,5 +1,16 @@
-"""Fase 1 analisis independiente del Sobol: (1) salidas degeneradas, (2) S_T medio robusto, (3) criterio de cierre
-CI(S_T) < 0.05 en el top 10. Bootstrap propio (Jansen) sobre las N muestras base, mismo remuestreo para todas las salidas."""
+r"""LEGACY AUDIT SCRIPT (v6.0-to-v6.1 review). Kept as a record; it is not rerunnable from the release
+as shipped because its input paths or inputs are not included (see README, "Legacy scripts").
+
+Independent Phase-1 audit of the Sobol output (written during the v6.0 to v6.1 review).
+
+Checks: (1) degenerate outputs; (2) robust branch-mean Jansen S_T after excluding them; and (3) the
+closing criterion that the top-10 S_T 95% intervals have width (and half-width) below 0.05.
+Bootstrap: B=500 resamples of the N base rows with seed 2026, shared across outputs.
+
+Run from the repository root. Paths are relative; it reads sens_out_v6_{5,3}s/Y_outputs.npy, i.e.
+the earlier N directories. The release N=512 data are in sens_out_v6_{5,3}s_n512 and are summarized
+by src/sobol_report_v6.py, which implements the same criterion as the production report. Writes
+results/analysis_phase1/sobol_robust_*.csv, sobol_output_diagnostics.csv and sobol_closing_criterion.json."""
 import numpy as np, pandas as pd, json, sys, os
 sys.path.insert(0, "src"); import sens_v6 as S
 OUT = "results/analysis_phase1"; D = len(S.NAMES); names = S.out_names()
@@ -9,6 +20,7 @@ for t in (5, 3):
     Y = np.load(f"sens_out_v6_{t}s/Y_outputs.npy"); N = Y.shape[0] // (D + 2)
     Yr = Y.reshape(N, D + 2, -1); A = Yr[:, 0]; Bm = Yr[:, -1]; AB = Yr[:, 1:-1]   # (N,out),(N,out),(N,D,out)
     def st(idx):
+        r"""Return (Jansen S_T, Saltelli S1) for selected base rows idx, each with shape (D, outputs)."""
         a, b, ab = A[idx], Bm[idx], AB[idx]
         V = np.var(np.r_[a, b], axis=0)
         num = 0.5 * np.mean((a[:, None, :] - ab) ** 2, axis=0)            # (D,out)
@@ -17,7 +29,7 @@ for t in (5, 3):
             return num / V, s1 / V
     ST0, S10 = st(np.arange(N))
     boots = np.stack([st(rng.integers(0, N, N))[0] for _ in range(B)])   # (B,D,out)
-    # diagnostico de degeneracion: fraccion de evaluaciones con salida != valor base modal (UHI>0)
+    # degeneracy diagnostic: fraction of evaluations whose output differs from the modal base value (implemented as the fraction of nonzero outputs, i.e. UHI>0)
     fnz = (np.abs(Y) > 0).mean(0); sd = Y.std(0)
     deg = []
     for k, on in enumerate(names):
@@ -38,7 +50,7 @@ for t in (5, 3):
         tab["pass_halfwidth_lt_0.05"] = tab.half_width < 0.05
         tab.insert(0, "rank", np.arange(1, D + 1))
         tab.to_csv(f"{OUT}/sobol_robust_{br}_{t}s.csv", index=False)
-        # criterio por salida individual: half-width SALib-like (1.96*sd boot) en el top 10 de cada salida
+        # per-output criterion: SALib-like half-width (1.96*bootstrap sd) over the top 10 of each output
         perout = []
         for k in ks:
             sdk = boots[:, :, k].std(0) * 1.96; top = np.argsort(-ST0[:, k])[:10]

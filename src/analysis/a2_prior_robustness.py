@@ -1,4 +1,14 @@
-"""Robustez al prior (independiente de prior_sensitivity_v6.py): rocky, hycean, combinado; 5 y 3 sigma."""
+r"""LEGACY AUDIT SCRIPT (v6.0-to-v6.1 review). Kept as a record; it is not rerunnable from the release
+as shipped because its input paths or inputs are not included (see README, "Legacy scripts").
+
+Independent class-prior robustness check for rocky, Hycean and combined branches at 5 and 3 sigma.
+
+Run from the repository root. It reads results/uhi_v6_<branch>_<variant>_<thr>s.csv (the v6.1 release
+stores them in results/v6.1) for main and ten prior-test variants. It reports top-10/top-20 overlap,
+Spearman correlation among planets alive in either run, Kendall tau on the top-20 union, survivor
+counts, top-ranked planets, entries/exits and the maximum UHI_rank change. A scenario is flagged as
+material if top-10 overlap is <=6 or Spearman <0.8 (reporting thresholds). Writes
+results/analysis_phase1/prior_robustness_all_branches.csv."""
 import numpy as np, pandas as pd, json
 from scipy.stats import spearmanr, kendalltau
 V = ["pA1_rocoso","pA2_volatil","pA3_ck17","pA4_empM","pA5_empM_P5","pB1_msini_min","pB2_msini_howard","pC1_mr_ck17","pD1_linea_earthlike","pD2_linea_h2o100"]
@@ -12,7 +22,7 @@ for t in (5, 3):
             t10m, t10d = list(m.index[:10]), list(d.index[:10])
             u20 = list(dict.fromkeys(list(m.index[:20]) + list(d.index[:20])))
             alive = sorted(set(m.index[m.P_alive > 0]) | set(d.index[d.P_alive > 0]))
-            # P_top10 suma ~10 si hay >=10 vivos por draw; overlap ponderado
+            # P_top10 sums to ~10 when >=10 planets survive per draw; weighted overlap
             rows.append(dict(thr=t, branch=b, variant=v, top10_overlap=len(set(t10m) & set(t10d)),
                              top20_overlap=len(set(m.index[:20]) & set(d.index[:20])),
                              spearman_alive_union=round(spearmanr(m.loc[alive, "UHI_rank"], d.reindex(alive).UHI_rank.fillna(0)).statistic, 3),

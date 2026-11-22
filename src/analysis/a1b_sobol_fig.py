@@ -1,3 +1,11 @@
+r"""LEGACY AUDIT SCRIPT (v6.0-to-v6.1 review). Kept as a record; it is not rerunnable from the release
+as shipped because its input paths or inputs are not included (see README, "Legacy scripts").
+
+Plot the robust Sobol summaries written by a1_sobol_check.py.
+
+Run from the repository root. Reads results/analysis_phase1/sobol_robust_<branch>_<thr>s.csv and writes
+figures/analysis_phase1/fig_a1_sobol_ST_robusto.png: top-15 mean S_T, bootstrap 95% intervals, green when
+the full interval width is below 0.05, and mean S1 as dark inner bars."""
 import pandas as pd, numpy as np, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 fig, axs = plt.subplots(2, 3, figsize=(18, 11))
 for i, t in enumerate((5, 3)):

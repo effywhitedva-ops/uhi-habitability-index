@@ -1,9 +1,11 @@
 #!/bin/bash
-# v6.1: Sobol N=512 a 5s y 3s (4 procesos cada uno) en directorios nuevos; luego reporte S_T corregido y marcador DONE
+# v6.1 Sobol analysis: N=512 at 5 and 3 sigma (4 worker processes each) into new directories
+# sens_out_v6_{5,3}s_n512, then the corrected S_T report (src/sobol_report_v6.py, tag v6.1_n512).
+# Each run evaluates 17,408 parameter vectors x 1,214 planets x 100 draws; it checkpoints and can resume.
 cd "$(dirname "$0")"
 PY="./.venv/bin/python"
 if [ ! -x "$PY" ]; then
-  echo "No está el venv de UHI en $PY. Recréalo con: bash /workspace/env/bootstrap.sh" >&2
+  echo "UHI virtual environment not found at $PY. Create it with: python3.13 -m venv .venv && .venv/bin/pip install -r requirements.txt" >&2
   exit 1
 fi
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1

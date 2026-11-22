@@ -1,9 +1,11 @@
 #!/bin/bash
-# v6.1: 22 variantes de prior + madhu (5s/3s) con los fixes, en results/v6.1; regresion legacy (fixes apagados) en results/v6.1_legacy_check
+# v6.1 Monte Carlo batch: main, madhu and ten class-prior variants at 5 and 3 sigma (24 runs, seed 42,
+# 10,000 draws) into results/v6.1, plus one legacy run (v6.1 fixes off) into results/v6.1_legacy_check,
+# which must reproduce v6.0. Runs 8 jobs in parallel with single-threaded BLAS. Logs: logs/v6.1/mc_*.log.
 cd "$(dirname "$0")"
 PY="./.venv/bin/python"
 if [ ! -x "$PY" ]; then
-  echo "No está el venv de UHI en $PY. Recréalo con: bash /workspace/env/bootstrap.sh" >&2
+  echo "UHI virtual environment not found at $PY. Create it with: python3.13 -m venv .venv && .venv/bin/pip install -r requirements.txt" >&2
   exit 1
 fi
 export PY

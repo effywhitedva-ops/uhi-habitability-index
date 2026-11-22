@@ -1,8 +1,21 @@
-"""Sobol (Saltelli, SALib) de UHI v6 Fase 1 a umbral SNR FIJO (escenario; D5): python sens_v6.py THR N WORKERS OUTDIR
-Evalua el MISMO codigo de produccion (simulate_planet_v6) con 100 draws por planeta sobre los 1213 planetas de la
-muestra de sensibilidad de v5 (sens_planets_v5.txt), con numeros aleatorios comunes (semilla por planeta = crc32 del nombre).
-Salidas por rama (rocky, hycean, combined): solapamiento top-10 con la corrida base, Spearman vs base, numero de vivos y
-UHI_rank de los planetas clave. S1/ST con calc_second_order=False (como v5)."""
+r"""Global Sobol sensitivity analysis of UHI v6.1 at a fixed detection threshold.
+
+Usage: python src/sens_v6.py THR N WORKERS OUTDIR, where THR is the SNR threshold in sigma
+(5 or 3; scenario D5), N the Saltelli base sample size (512 for the release), WORKERS the process
+count and OUTDIR the output folder. With D=32 parameters and no second-order terms, SALib creates
+N(D+2)=17,408 parameter vectors for N=512.
+
+Each vector is evaluated by the production simulate_planet_v6 function with 100 draws per planet
+on the 1,214-planet v5 sensitivity sample (data/sens_planets_v5.txt). Common random numbers use a
+per-planet CRC32 seed, so differences mainly reflect parameter changes rather than Monte Carlo noise.
+For rocky, Hycean and combined branches it records top-10 overlap with the baseline, Spearman
+correlation with baseline UHI_rank, the number of surviving planets and UHI_rank for 14 key targets.
+
+Ranges are deliberately broad epistemic intervals around production values, chosen to test whether
+conclusions are robust, not posterior distributions. References for each centre are in PARAMS and
+docs/assumptions_v6_es.md (D1, D2, D4 and v5.2 assumptions). Outputs are base_raw.npy,
+Y_raw checkpoints (not released), Y_outputs.npy, sobol_results.csv and meta.json.
+sobol_report_v6.py recomputes the v6.1 summary from Y_outputs.npy, excluding degenerate outputs."""
 import os, sys, time, zlib, json, warnings
 warnings.filterwarnings("ignore")
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
@@ -11,9 +24,12 @@ from multiprocessing import Pool
 from scipy.stats import spearmanr
 import uhi_code as u, uhi_code_v6 as v6
 
-# (nombre, base, lo, hi, descripcion)
+# (name, base, lo, hi, description)
+# Sensitivity factors: name, production value, lower bound, upper bound, description. Units are given in
+# descriptions. Inherited v5.2 factors were selected by the v5 Sobol ranking; D-series factors cover new Phase-1
+# assumptions. Many D factors shift the centre of a uniform prior with fixed width.
 PARAMS = [
- # --- v5.2 heredados con mayor S_T medio en el Sobol de v5 (fR_d se excluye: Rocky ya no tiene borde superior de radio) ---
+ # --- inherited v5.2 factors with the largest mean S_T in the v5 Sobol (fR_d excluded: Rocky no longer has an upper radius limit) ---
  ("floor_ppm", 20.0, 10.0, 50.0, "S_obs: piso sistematico [ppm]"),
  ("n_H", 2.0, 1.0, 5.0, "S_obs: escalas de altura"),
  ("iwa_hi", 4.0, 3.0, 6.0, "S_obs nt: IWA max [lambda/D]"),
@@ -51,6 +67,8 @@ PARAMS = [
  ("hyc_alb", 0.12, 0.05, 0.60, "D4: albedo de Bond Hycean (Innes 0.12; Leconte+2024 >0.5)"),
 ]
 NAMES = [p[0] for p in PARAMS]; BOUNDS = [[p[2], p[3]] for p in PARAMS]
+# Representative targets tracked by name across branches: rocky benchmarks, Hycean candidates and non-
+# transiting/RV planets. Their individual UHI_rank values are outputs, not inputs.
 KEY = ["TOI-7166 b", "GJ 3378 b", "GJ 273 b", "Proxima Cen b", "Proxima Cen d", "TRAPPIST-1 d", "TRAPPIST-1 e",
        "TRAPPIST-1 f", "TOI-700 d", "TOI-700 e", "K2-18 b", "LHS 1140 b", "Kepler-186 f", "TOI-4336 A b"]
 BR = ["rocky", "hycean", "combined"]
@@ -59,6 +77,11 @@ _D = None; _THR = None
 
 
 def to_P(x):
+    r"""Translate a Sobol parameter vector into model parameter and configuration dictionaries.
+
+    x follows NAMES order and units in PARAMS. Scalar values are copied directly. Several factors
+    set centres of the per-draw uniform priors with fixed half-widths; log-parameters are exponentiated;
+    log2_piH changes the Hycean class weight. iwa_hi is not allowed below iwa_lo. Returns (P, cfg)."""
     P = {**u.V3, **v6.V6}; P["snr_thr"] = _THR; cfg = dict(v6.CFG_V6)
     s = dict(zip(NAMES, x))
     for k in ["floor_ppm", "n_H", "iwa_hi", "iwa_lo", "n_bins", "xuv_mid", "tsat_M", "lpco2_hi", "olr_Amin", "flare_late",
@@ -82,6 +105,10 @@ def to_P(x):
 
 
 def init(thr):
+    r"""Initialize the process-global snapshot sample and SNR threshold.
+
+    thr is in sigma. The prepared Archive snapshot is restricted to sens_planets_v5.txt. This is also the
+    multiprocessing initializer, so each worker independently has the same planet order."""
     global _D, _THR
     _THR = thr; u.V3["snr_thr"] = thr
     names = [l.rstrip("\n") for l in open(os.path.join(ROOT, "data", "sens_planets_v5.txt")) if l.strip()]
@@ -90,6 +117,10 @@ def init(thr):
 
 
 def evaluate(x, n=100):
+    r"""Evaluate one Sobol vector and return a (3, planets) UHI_rank array.
+
+    n is draws per planet. The common CRC32 seed per planet makes the evaluation deterministic for a
+    given vector and package environment. Branch order is rocky, Hycean, combined."""
     P, cfg = to_P(x)
     out = {b: np.zeros(len(_D)) for b in BR}
     for i, row in enumerate(_D.itertuples()):
@@ -101,12 +132,16 @@ def evaluate(x, n=100):
 
 
 def work(args):
+    r"""Multiprocessing helper: evaluate (row index, parameter vector) and return (index, result)."""
     j, x = args
     return j, evaluate(x)
 
 
 def outputs(Y, base):
-    """Y: (3, planetas) -> vector de salidas."""
+    r"""Convert one (3, planets) result into the scalar output vector analysed by Sobol.
+
+    For each branch: top-10 overlap fraction with base ranking, Spearman rho against base (0 if constant),
+    number of positive UHI_rank values, then UHI_rank for KEY targets (NaN if absent)."""
     names = list(_D.pl_name); vals = []
     for k, b in enumerate(BR):
         y, y0 = Y[k], base[k]
@@ -117,6 +152,7 @@ def outputs(Y, base):
 
 
 def out_names():
+    r"""Return output labels in exactly the order produced by outputs()."""
     return [f"{b}:{o}" for b in BR for o in ["top10_overlap", "spearman_vs_base", "count_alive"] + [f"UHI_{p}" for p in KEY]]
 
 
@@ -127,13 +163,15 @@ if __name__ == "__main__":
     os.makedirs(outdir, exist_ok=True)
     init(thr)
     prob = dict(num_vars=len(NAMES), names=NAMES, bounds=BOUNDS)
-    X0 = sobol_sample.sample(prob, N, calc_second_order=False, seed=11)   # Saltelli/Sobol aleatorizado (SALib)
+    # Saltelli sampling with scrambled Sobol sequence (seed 11). Without second-order terms the row layout per
+    # base sample is A, AB_1..AB_D, B; sobol_report_v6.py relies on this order.
+    X0 = sobol_sample.sample(prob, N, calc_second_order=False, seed=11)   # randomized Saltelli/Sobol (SALib)
     base_x = np.array([p[1] for p in PARAMS])
     t = time.time(); base = evaluate(base_x); print("base eval", round(time.time() - t, 1), "s", flush=True)
     np.save(os.path.join(outdir, "base_raw.npy"), base)
     raw_path = os.path.join(outdir, "Y_raw.npy")
     R = np.full((len(X0), 3, len(_D)), np.nan, np.float32)
-    # reanudacion: usa el checkpoint valido con mas filas completas (Y_raw.npy o copias rotativas Y_raw_bk0/1.npy)
+    # resume: use the valid checkpoint with the most complete rows (Y_raw.npy or rotating copies Y_raw_bk0/1.npy)
     best = -1
     for cand in [raw_path, os.path.join(outdir, "Y_raw_bk0.npy"), os.path.join(outdir, "Y_raw_bk1.npy")]:
         if not os.path.exists(cand):
@@ -146,15 +184,21 @@ if __name__ == "__main__":
             best = int(np.isfinite(R0).all(axis=(1, 2)).sum()); R = R0; print("reanuda desde", cand, "filas_completas", best, flush=True)
     todo = [(j, X0[j]) for j in range(len(X0)) if not np.isfinite(R[j]).all()]
     print(f"thr={thr} N={N} D={len(NAMES)} evals={len(X0)} pendientes={len(todo)}", flush=True)
-    # v6.1 ejecucion (20 nov 2026): checkpoint atomico frecuente + copia rotativa; no cambia la ciencia ni las muestras
+    # v6.1 run (20 Nov 2026): frequent atomic checkpoint + rotating backup; changes neither the science nor the samples
     CK_ROWS, CK_SECS, BK_SECS = int(os.environ.get("UHI_CK_ROWS", 50)), float(os.environ.get("UHI_CK_SECS", 120)), float(os.environ.get("UHI_BK_SECS", 1800))
     def save_atomic(path, arr):
+        r"""Save a NumPy array via temporary file, fsync and atomic replacement.
+
+        This protects multi-day checkpoints from partial writes; it does not alter samples or science."""
         tmp = path + ".tmp"
         with open(tmp, "wb") as fh:
             np.save(fh, arr); fh.flush(); os.fsync(fh.fileno())
         os.replace(tmp, path)
         dfd = os.open(os.path.dirname(os.path.abspath(path)), os.O_RDONLY); os.fsync(dfd); os.close(dfd)
     def checkpoint(c, force_bk=False):
+        r"""Write the main checkpoint, print progress and occasionally rotate a backup copy.
+
+        c is the count of completed tasks in this session. force_bk writes a backup immediately."""
         nonlocal_state["ck"] = time.time(); save_atomic(raw_path, R)
         done = int(np.isfinite(R).all(axis=(1, 2)).sum())
         print(c, len(todo), f"{time.time() - t:.0f}s", f"filas_completas={done}/{len(X0)}", time.strftime("%H:%M:%S"), flush=True)

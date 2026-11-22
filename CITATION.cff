@@ -1,7 +1,7 @@
 cff-version: 1.2.0
-message: "If you use this software or its priority lists, please cite it using the metadata below. Cite the v6.1 version DOI shown on Zenodo for exact reproducibility."
-title: "UHI v6.1: facility-specific probabilistic priority lists of temperate exoplanets"
-version: "6.1"
+message: "If you use this software or its priority lists, please cite it using the metadata below. Cite the version DOI shown on Zenodo for the release you used."
+title: "UHI v6.1.1: facility-specific probabilistic priority lists of temperate exoplanets"
+version: "6.1.1"
 date-released: 2026-11-21
 authors:
   - family-names: Viridis
@@ -9,11 +9,11 @@ authors:
     orcid: "https://orcid.org/0009-0004-5620-5352"
     affiliation: "Independent Researcher, El Salvador"
 license: MIT
-doi: "10.5281/zenodo.24430693"
+doi: "10.5281/zenodo.24358421"
 identifiers:
   - type: doi
     value: "10.5281/zenodo.24430693"
-    description: "Version DOI of v6.1"
+    description: "Version DOI of v6.1 (numerically identical to v6.1.1)"
   - type: doi
     value: "10.5281/zenodo.24358421"
     description: "Concept DOI (all versions)"
@@ -32,6 +32,8 @@ abstract: >
   per-class (rocky, Hycean) priority lists for atmospheric
   characterization, combining climate, cumulative XUV atmospheric
   retention, per-draw composition and detectability. Version 6.1 adds a
-  converged Saltelli-Sobol analysis (N = 512) for the rocky branch; the
-  Hycean branch is released as indicative because its sensitivity
-  analysis does not converge.
+  Saltelli-Sobol analysis (N = 512); for the rocky branch the closing
+  criterion is met on the half-width reading (10/10) but not on the
+  full-width reading (9/10), and the Hycean branch is released as
+  indicative. Version 6.1.1 adds English code documentation, README
+  corrections and a top-N membership analysis, with no numerical change.

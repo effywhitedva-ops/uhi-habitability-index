@@ -1,19 +1,33 @@
-"""Resumen y figura del Sobol v6 (v6.1, fix 5).  python3 src/sobol_report_v6.py DIR_5S DIR_3S TAG
-Cambios respecto a v6.0 (que promediaba salidas degeneradas y daba S_T de hasta 9e4):
-  * se excluyen salidas constantes, no finitas, "casi siempre iguales" (< MIN_FRAC de evaluaciones distintas del valor modal;
-    p. ej. el UHI Hycean de un planeta casi siempre 0) y las de estimador inestable (S_T puntual > ST_MAX);
-  * S_T (Jansen) y S1 (Saltelli 2010) se recalculan sobre la matriz A, AB_i, B de SALib, y el IC95 de la MEDIA por rama
-    sale de un bootstrap (B_BOOT remuestreos de las N filas base, comunes a todas las salidas);
-  * se reportan ancho completo y semiancho del IC95 y el criterio de cierre (< 0.05) con ambas lecturas.
-Escribe tables/sobol_<TAG>_<rama>_<t>s.csv, tables/sobol_<TAG>_closing.json, tables/sobol_<TAG>_outputs.csv y
-figures/fig_<TAG>_sobol_ST.png (no sobreescribe las salidas de v6.0 si TAG es distinto)."""
+r"""Summarize the released v6.1 Sobol samples and draw the S_T figure (v6.1 fix 5).
+
+Usage: python3 src/sobol_report_v6.py DIR_5S DIR_3S TAG, with directories relative to the repository
+root (for the release: sens_out_v6_5s_n512 sens_out_v6_3s_n512 v6.1_n512). Only each Y_outputs.npy is
+read; the model is not rerun.
+
+Differences from v6.0: outputs that are non-finite, constant, nearly always equal (fewer than
+MIN_FRAC of evaluations differ from the modal value; for example a Hycean UHI that is almost always
+zero), or unstable (any point S_T above ST_MAX) are excluded rather than averaged. Total effects use
+Jansen (1999) and first-order effects Saltelli et al. (2010), computed from SALib's A, AB_i, B blocks.
+Branch-mean S_T 95% intervals use B_BOOT bootstrap resamples of the N base rows, shared across outputs.
+The closing criterion is met when every top-10 parameter has an interval width below THR_CI; both full
+width and half width are reported because the stricter interpretation should remain visible.
+
+Writes tables/sobol_<TAG>_<branch>_<thr>s.csv, tables/sobol_<TAG>_closing.json,
+tables/sobol_<TAG>_outputs.csv and figures/fig_<TAG>_sobol_ST.png. A repeated TAG overwrites those files."""
 import os, sys, json, numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, os.path.join(ROOT, "src"))
+# Analysis settings: minimum non-modal fraction, maximum stable point S_T, bootstrap resamples, and the 0.05
+# interval-width closing threshold.
 MIN_FRAC, ST_MAX, B_BOOT, THR_CI = 0.10, 1.5, 500, 0.05
 
 
 def jansen(A, Bm, AB):
+    r"""Return Jansen total-effect and Saltelli first-order indices.
+
+    A and Bm have shape (N, outputs); AB has shape (N, D, outputs). Variances combine A and B. Outputs
+    have shape (D, outputs) and are dimensionless. Division-by-zero warnings are suppressed because
+    degenerate outputs are flagged separately."""
     V = np.var(np.r_[A, Bm], axis=0)
     with np.errstate(all="ignore"):
         ST = 0.5 * np.mean((A[:, None, :] - AB) ** 2, axis=0) / V
@@ -22,6 +36,10 @@ def jansen(A, Bm, AB):
 
 
 def degenerate(Y, ST):
+    r"""Return one exclusion reason per output column ('' means retained).
+
+    Y is the full (evaluations, outputs) matrix and ST the point estimates. Thresholds MIN_FRAC=0.10 and
+    ST_MAX=1.5 are documented analysis choices (v6.1 fix 5), not properties of SALib."""
     out = []
     for k in range(Y.shape[1]):
         y = Y[:, k]
@@ -35,6 +53,10 @@ def degenerate(Y, ST):
 
 
 def analyze(Y, names, D, branches=("rocky", "hycean", "combined"), seed=2026):
+    r"""Compute retained branch-mean S_T, bootstrap intervals and mean S1.
+
+    Y is reshaped as (N, D+2, outputs), names gives labels, D is number of factors and seed fixes the
+    bootstrap. Returns (per-branch dictionary, exclusion reasons, N). Retained outputs are equally weighted."""
     N = Y.shape[0] // (D + 2); Yr = Y[: N * (D + 2)].reshape(N, D + 2, -1)
     A, Bm, AB = Yr[:, 0], Yr[:, -1], Yr[:, 1:-1]
     ST, S1 = jansen(A, Bm, AB); flags = degenerate(Y, ST)

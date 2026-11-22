@@ -1,4 +1,13 @@
-"""Comparacion formal Innes+2023 (principal) vs Madhusudhan+2021 (variante) en la rama Hycean. Independiente del pipeline."""
+r"""LEGACY AUDIT SCRIPT (v6.0-to-v6.1 review). Kept as a record; it is not rerunnable from the release
+as shipped because its input paths or inputs are not included (see README, "Legacy scripts").
+
+Formal comparison of the Hycean climate criteria: Innes et al. (2023) production vs Madhusudhan et al. (2021).
+
+Run from the repository root. It reads results/uhi_v6_hycean_{main,madhu}_{5,3}s.csv (in the v6.1 release:
+results/v6.1). It confirms that non-climate sub-index medians are unchanged, counts planets alive under
+each criterion, compares instellation against the most permissive production Innes edge (1 bar, f_cl=2)
+and the 500 K zero-albedo Madhusudhan boundary, and compares rankings. Writes
+results/analysis_phase1/innes_vs_madhu_formal.json and figures/analysis_phase1/fig_a3_innes_vs_madhu.png."""
 import numpy as np, pandas as pd, json, sys
 sys.path.insert(0, "src"); import xuv_history as X
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
@@ -10,12 +19,12 @@ fig, axs = plt.subplots(1, 3, figsize=(19, 6.2))
 for t in (5, 3):
     I = pd.read_csv(f"results/uhi_v6_hycean_main_{t}s.csv").set_index("planet")
     M = pd.read_csv(f"results/uhi_v6_hycean_madhu_{t}s.csv").set_index("planet").reindex(I.index)
-    # 1) que cambia: solo S_clima_H? (todas las demas medianas iguales)
+    # 1) what changes: only S_clima_H? (all other medians should be identical)
     diffs = {c: float(np.nanmax(np.abs(I[c] - M[c]))) for c in sub}
     aI, aM = I.P_alive > 0, M.P_alive > 0
-    # 2) criterio climatico: S/S_crit Innes en el borde mas permisivo de la principal (P=1 bar, f_cl=2)
+    # 2) climate criterion: S/S_crit(Innes) at the most permissive edge of the production model (P=1 bar, f_cl=2)
     teff = I.st_teff.fillna(3457.0); smax = 2.0 * X.s_crit_innes(teff, 1.0)
-    teq0 = 278.6 * I.S_med ** 0.25            # T_eq(A=0) para S en S_E (T_eq,Tierra(A=0) = 278.6 K)
+    teq0 = 278.6 * I.S_med ** 0.25            # T_eq(A=0) for S in S_E (Earth T_eq at A=0 = 278.6 K)
     madhu_ok = teq0 <= 500
     innes_never = I.S_med > smax
     both = aI & aM

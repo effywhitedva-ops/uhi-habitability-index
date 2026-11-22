@@ -1,5 +1,17 @@
-"""Sensibilidad de la rama Rocky (y del combinado) al prior de clase + comparacion formal Innes vs Madhusudhan (Hycean).
-Lee results/uhi_v6_{rocky,combined,hycean}_<variante>_<thr>s.csv; escribe tables/prior_sens_*.{csv,md} y figures/fig_v6_prior_*.png."""
+r"""Class-prior sensitivity of rocky/combined rankings and formal Innes vs Madhusudhan comparison.
+
+Reads uhi_v6_{rocky,combined,hycean}_<variant>_<thr>s.csv from UHI_RES (default results/) and writes
+prior_sens_* and innes_vs_madhu_* tables to UHI_TAB (default tables/) plus figures to UHI_FIG
+(default figures/). For the v6.1 release layout, set UHI_RES=results/v6.1. These environment
+variables only redirect files; they do not change computations.
+
+Scenarios correspond to docs/assumptions_v6_es.md prior tests (a)-(d): rocky/volatile class priors,
+alternative mass-route transitions (Chen & Kipping 2017 and empirical fits), true-mass treatment for
+M sin i (minimum mass or a Howard et al. 2010 prior), an alternative M-R relation, and alternative
+composition boundaries. A planet is robust if it stays in the top 10 in every scenario, stable if it
+stays in the top 20 with spread <=10 places, and prior-dependent otherwise; these labels are
+reporting conventions. The Hycean comparison treats Innes et al. (2023) as production and
+Madhusudhan et al. (2021) as an optimistic variant."""
 import os, json, warnings; warnings.filterwarnings("ignore")
 import numpy as np, pandas as pd
 from scipy.stats import spearmanr, kendalltau
@@ -8,11 +20,13 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RD, TD, FD = (os.environ.get(k, os.path.join(ROOT, d)) for k, d in (("UHI_RES", "results"), ("UHI_TAB", "tables"), ("UHI_FIG", "figures")))
 for _d in (TD, FD): os.makedirs(_d, exist_ok=True)
 R = lambda f: os.path.join(RD, f); T = lambda f: os.path.join(TD, f); F = lambda f: os.path.join(FD, f)
+# Scenario labels used in tables and figures (keys are run_uhi_v6.py variant names).
 SC = {"pA1_rocoso": "A1 prior rocoso (π=2:1:1, M_v 5-10)", "pA2_volatil": "A2 prior volátil (π=0.5:1:1, M_v 1.5-3)",
       "pA3_ck17": "A3 transición CK17 (M_v=2.04)", "pA4_empM": "A4 empírico archivo M (M_v=4.10, s=0.40)",
       "pA5_empM_P5": "A5 empírico M, P>5 d (M_v=2.83, s=0.70)", "pB1_msini_min": "B1 M = M sin i", "pB2_msini_howard": "B2 M sin i + prior Howard+2010",
       "pC1_mr_ck17": "C1 M-R Chen & Kipping 2017", "pD1_linea_earthlike": "D1 frontera línea Earth-like", "pD2_linea_h2o100": "D2 frontera 100% H2O"}
 def md_table(d, index=False):
+    r"""Render a DataFrame as a Markdown table, formatting floating values to three decimals."""
     d = d.reset_index() if index else d
     fmt = lambda v: f"{v:.3f}" if isinstance(v, (float, np.floating)) else str(v)
     return "| " + " | ".join(map(str, d.columns)) + " |\n|" + "---|" * len(d.columns) + "\n" + "\n".join("| " + " | ".join(fmt(v) for v in r) + " |" for r in d.values)
@@ -24,7 +38,7 @@ for t in [5, 3]:
         continue
     for b in ["rocky", "combined"]:
         m = load(b, "main", t); runs = {v: load(b, v, t) for v in avail}
-        # metricas globales por escenario
+        # global metrics per scenario
         g = []
         for v, d in runs.items():
             u = list(dict.fromkeys(list(m.index[:20]) + list(d.index[:20])))
@@ -35,7 +49,7 @@ for t in [5, 3]:
                           spearman_vivos=spearmanr(m.loc[alive, "UHI_rank"], d.loc[alive, "UHI_rank"]).statistic, n_vivos=int((d.P_alive > 0).sum()),
                           nuevo_n1=d.index[0]))
         g = pd.DataFrame(g); g.to_csv(T(f"prior_sens_global_{b}_{t}s.csv"), index=False)
-        # por planeta: top 20 principal
+        # per planet: main top 20
         rows = []
         for p in m.index[:20]:
             rk = {v: int(runs[v].loc[p, "rank_pos"]) for v in avail}; ur = {v: runs[v].loc[p, "UHI_rank"] for v in avail}
@@ -73,8 +87,9 @@ for t in [5, 3]:
             ax.set_yticks(y); ax.set_yticklabels(pp.planet, fontsize=8); ax.set_xlabel("P_top10 (rango sobre los 10 escenarios de prior)")
             ax.set_title(f"Rocky {t}σ: dispersión de P_top10 por prior de clase"); ax.legend(); fig.tight_layout(); fig.savefig(F(f"fig_v6_prior_ptop10_{t}s.png"), dpi=140); plt.close(fig)
 
-# ---- Innes vs Madhusudhan (Hycean), comparacion formal ----
+# ---- Innes vs Madhusudhan (Hycean), formal comparison ----
 rows = []; md = ["# Rama Hycean: Innes+2023 (principal) vs Madhusudhan+2021 (variante optimista)\n"]
+# Hycean candidates and benchmarks reported individually in the Innes/Madhusudhan comparison.
 KEYP = ["K2-18 b", "TOI-7166 b", "K2-332 b", "K2-125 b", "TOI-2094 b", "TOI-4336 A b", "LHS 1140 b", "TOI-2257 b", "TOI-270 d", "Kepler-1630 b", "Wolf 1061 d", "Kapteyn c"]
 for t in [5, 3]:
     i_, m_ = load("hycean", "main", t), load("hycean", "madhu", t)
