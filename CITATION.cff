@@ -9,8 +9,11 @@ authors:
     orcid: "https://orcid.org/0009-0004-5620-5352"
     affiliation: "Independent Researcher, El Salvador"
 license: MIT
-doi: "10.5281/zenodo.24358421"
+doi: "10.5281/zenodo.24431744"
 identifiers:
+  - type: doi
+    value: "10.5281/zenodo.24431744"
+    description: "Version DOI of v6.1.1"
   - type: doi
     value: "10.5281/zenodo.24430693"
     description: "Version DOI of v6.1 (numerically identical to v6.1.1)"

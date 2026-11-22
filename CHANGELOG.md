@@ -16,7 +16,7 @@
   - New snippets cover ELT/PCS and 3σ lists.
   - Legacy scripts are listed as not rerunnable from the release.
 - Legacy audit scripts (`src/make_outputs_v6.py`, `src/analysis/a1`–`a7`) are labelled as such in their docstrings.
-- `CITATION.cff` and `.zenodo.json`: version 6.1.1, with matching wording on convergence. The CITATION `doi` field is the concept DOI until Zenodo assigns the v6.1.1 version DOI.
+- `CITATION.cff` and `.zenodo.json`: version 6.1.1, with matching wording on convergence. Zenodo version DOI of v6.1.1: 10.5281/zenodo.24431744 (added to README and CITATION in a follow-up commit, without a new release).
 - Corrected a text error in the original `sens_v6.py` description: the Sobol sample has 1,214 planets.
 
 ### Added
