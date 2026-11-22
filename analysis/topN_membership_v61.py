@@ -14,7 +14,7 @@ P(top-N) = fraction of draws in which the planet is in the top N with a positive
 Nominal top-N = the published order (UHI_rank, as in README); the median-per-draw-rank order is reported too.
 Supplementary: P(top-N | alive) = P(top-N) / P_alive, because a planet cannot be in a list in draws where it is vetoed.
 
-Usage (from the repository root; about 3 min per threshold on one core):
+Usage: run from the repository root (about 3 min per threshold on one core):
   .venv/bin/python analysis/topN_membership_v61.py --thr 5 --scratch repro/topN_scratch
   .venv/bin/python analysis/topN_membership_v61.py --thr 3 --scratch repro/topN_scratch
   .venv/bin/python analysis/topN_membership_v61.py --summarize --scratch repro/topN_scratch --tables repro/tables

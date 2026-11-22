@@ -76,7 +76,7 @@ for f in repro/results/*.csv; do cmp "$f" "results/v6.1/$(basename "$f")" && ech
 .venv/bin/python src/sobol_report_v6.py sens_out_v6_5s_n512 sens_out_v6_3s_n512 repro_n512
 for b in rocky hycean combined; do for t in 5s 3s; do cmp tables/sobol_repro_n512_${b}_${t}.csv tables/sobol_v6.1_n512_${b}_${t}.csv && echo "identical ${b}_${t}"; done; done
 cmp tables/sobol_repro_n512_closing.json tables/sobol_v6.1_n512_closing.json && echo "identical closing"
-# the figure differs only because its title contains the tag
+# the figure differs only because its title contains the tag; the repro_n512 files are ignored by Git and can be deleted
 
 # Prior-robustness tables from the shipped variant results (the three variables are required)
 UHI_RES=results/v6.1 UHI_TAB=repro/tables/v6.1 UHI_FIG=repro/figures/v6.1 .venv/bin/python src/prior_sensitivity_v6.py

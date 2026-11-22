@@ -8,3 +8,6 @@ sens_out_v6_*/Y_raw*.npy
 # per-draw scratch of the top-N analysis and local reproduction folders
 analysis/_topN_scratch/
 repro/
+# Sobol report regenerated with the README tag (new files beside the shipped v6.1_n512 ones)
+tables/sobol_repro_n512_*
+figures/fig_repro_n512_sobol_ST.png
