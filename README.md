@@ -3,14 +3,14 @@
 # UHI v6.1: facility-specific, probabilistic priority lists of temperate exoplanets
 
 **Author:** Dr. Effy Viridis, Independent Researcher, ORCID [0009-0004-5620-5352](https://orcid.org/0009-0004-5620-5352)
-**Release:** `v6.1` (2026-11-21), branch `v6`, version DOI [10.5281/zenodo.24430693](https://doi.org/10.5281/zenodo.24430693) · **Code:** MIT · **Data, results, figures:** CC BY 4.0
+**Release:** `v6.1` (2026-11-21), version DOI [10.5281/zenodo.24430693](https://doi.org/10.5281/zenodo.24430693) · **Code:** MIT · **Data, results, figures:** CC BY 4.0
 
 ## In one paragraph
 This package ranks planets from the NASA Exoplanet Archive by how worthwhile they are as targets for atmospheric characterization. Every planet gets 10,000 Monte Carlo realizations that carry the catalogue uncertainties through four layers: climate (with a smooth tidal-locking transition), atmospheric retention under the star's cumulative XUV output, a per-draw composition class (rocky, Hycean or gas-rich), and a detection model for the one facility that suits it (JWST for transiting planets, ELT/PCS reflected light for the rest). For each planet the code reports the probability of passing every veto (`P_alive`), the score conditional on passing, the probability of landing in the top 10 (`P_top10`), and the composite `UHI_rank`. Lists are produced **per facility and per composition class**. They are not meant to be merged into one cross-facility ranking.
 
 **Status of the branches.** The rocky branch is the main product and its global sensitivity analysis has converged. The Hycean branch is released as **INDICATIVE (not converged)**; see "Global sensitivity" below for why.
 
-The previous model, v5.2, stays frozen and citable on Zenodo (version DOI [10.5281/zenodo.24358996](https://doi.org/10.5281/zenodo.24358996), Git tags `v5.2-final`, `v5.2.1`, `v5.2.2`, branch `main`). v6.1 is a different model, so its numbers should not be compared one to one with v5.2 tables.
+The previous model, v5.2, stays frozen and citable on Zenodo (version DOI [10.5281/zenodo.24358996](https://doi.org/10.5281/zenodo.24358996), Git tags `v5.2-final`, `v5.2.1`, `v5.2.2`). v6.1 is a different model, so its numbers should not be compared one to one with v5.2 tables.
 
 ## Concrete use cases
 1. **Choosing JWST transmission targets among temperate rocky planets.** Open `results/v6.1/uhi_v6_rocky_main_5s.csv`, keep `transiting == 1`, and sort by `UHI_rank`. At 5σ the first five are TRAPPIST-1 e, Kepler-442 b, TRAPPIST-1 f, TRAPPIST-1 d and TOI-1452 b. Each row also gives `P_alive`, `P_top10`, `P_R` (probability of being rocky) and the median sub-scores, so a proposer can see *why* a planet ranks where it does.

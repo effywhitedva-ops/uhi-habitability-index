@@ -1,7 +1,7 @@
 # Changelog
 
 ## v6.1 (2026-11-21)
-First public release of the v6 model line. Archived on Zenodo under the same concept DOI as v5.2 ([10.5281/zenodo.24358421](https://doi.org/10.5281/zenodo.24358421)). Released from branch `v6`; branch `main` keeps the frozen v5.2 package.
+First public release of the v6 model line. Archived on Zenodo under the same concept DOI as v5.2 ([10.5281/zenodo.24358421](https://doi.org/10.5281/zenodo.24358421)). The v5.2 package remains available from its Git tags and Zenodo versions.
 
 **Decision record.** On 2026-11-21 the author approved this release after the Sobol N=512 run finished, with the Hycean branch labelled indicative (not converged). Phase 1 of the v6 plan is closed for the rocky branch, which leads the analysis. Nothing in the model or its outputs was changed for the release; this step only documents and archives.
 
@@ -31,4 +31,4 @@ First public release of the v6 model line. Archived on Zenodo under the same con
 - English code comments in a separate copy (no logic changes), and a clean-clone reproducibility check.
 
 ## v5.2.x (2026-11-19)
-Frozen v5.2 package, still available from branch `main` and tags `v5.2-final`, `v5.2.1`, `v5.2.2`. Version DOI cited by the RNAAS note: [10.5281/zenodo.24358996](https://doi.org/10.5281/zenodo.24358996). See the changelog on `main` for its history.
+Frozen v5.2 package, available from tags `v5.2-final`, `v5.2.1`, `v5.2.2`. Version DOI of v5.2.1: [10.5281/zenodo.24358996](https://doi.org/10.5281/zenodo.24358996). Its full changelog is in `CHANGELOG.md` at tag `v5.2.2`.
