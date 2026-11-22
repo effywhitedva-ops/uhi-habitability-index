@@ -3,7 +3,7 @@
 # UHI v6.1: facility-specific, probabilistic priority lists of temperate exoplanets
 
 **Author:** Dr. Effy Viridis, Independent Researcher, ORCID [0009-0004-5620-5352](https://orcid.org/0009-0004-5620-5352)
-**Release:** `v6.1` (2026-11-21), branch `v6` · **Code:** MIT · **Data, results, figures:** CC BY 4.0
+**Release:** `v6.1` (2026-11-21), branch `v6`, version DOI [10.5281/zenodo.24430693](https://doi.org/10.5281/zenodo.24430693) · **Code:** MIT · **Data, results, figures:** CC BY 4.0
 
 ## In one paragraph
 This package ranks planets from the NASA Exoplanet Archive by how worthwhile they are as targets for atmospheric characterization. Every planet gets 10,000 Monte Carlo realizations that carry the catalogue uncertainties through four layers: climate (with a smooth tidal-locking transition), atmospheric retention under the star's cumulative XUV output, a per-draw composition class (rocky, Hycean or gas-rich), and a detection model for the one facility that suits it (JWST for transiting planets, ELT/PCS reflected light for the rest). For each planet the code reports the probability of passing every veto (`P_alive`), the score conditional on passing, the probability of landing in the top 10 (`P_top10`), and the composite `UHI_rank`. Lists are produced **per facility and per composition class**. They are not meant to be merged into one cross-facility ranking.
@@ -100,4 +100,4 @@ bash run_v61_sobol.sh                             # full Sobol N=512 from scratc
 - NASA Exoplanet Archive, Planetary Systems Composite Parameters (`pscomppars`), snapshot of 2026-11-18. This research has made use of the NASA Exoplanet Archive, operated by Caltech under contract with NASA under the Exoplanet Exploration Program.
 
 ## Cite
-Use `CITATION.cff`. Concept DOI (always resolves to the newest version): [10.5281/zenodo.24358421](https://doi.org/10.5281/zenodo.24358421). For exact reproducibility, cite the version DOI of v6.1 shown on the Zenodo record.
+Use `CITATION.cff`. Concept DOI (always resolves to the newest version): [10.5281/zenodo.24358421](https://doi.org/10.5281/zenodo.24358421). For exact reproducibility, cite the v6.1 version DOI: [10.5281/zenodo.24430693](https://doi.org/10.5281/zenodo.24430693).
